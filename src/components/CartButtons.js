@@ -1,14 +1,31 @@
-import React from 'react'
-import { FaShoppingCart, FaUserMinus, FaUserPlus } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
-import { useProductsContext } from '../context/products_context'
-import { useCartContext } from '../context/cart_context'
-import { useUserContext } from '../context/user_context'
+import React from 'react';
+import { FaShoppingCart, FaUserMinus, FaUserPlus } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { useProductsContext } from '../context/products_context';
+import { useCartContext } from '../context/cart_context';
+import { useUserContext } from '../context/user_context';
 
+//vart-btn-wrapper- global class- see in Navbar.js it is display none on a default screen, nested class in NavContainer = styled...
 const CartButtons = () => {
-  return <h4>cart buttons </h4>
-}
+  const { closeSidebar } = useProductsContext(); // extracting the closeSidebar function from the returned object from useProductsContext() and assigning it to a variable named closeSidebar.
+
+  return (
+    <Wrapper className="cart-btn-wrapper">
+      <Link to="/cart" className="cart-btn" onClick={closeSidebar}>
+        Cart
+        <span className="cart-container">
+          <FaShoppingCart />
+          <span className="cart-value">12</span>
+        </span>
+      </Link>
+      <button type="button" className="auth-btn">
+        Login
+        <FaUserPlus />
+      </button>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.div`
   display: grid;
@@ -62,5 +79,5 @@ const Wrapper = styled.div`
       margin-left: 5px;
     }
   }
-`
-export default CartButtons
+`;
+export default CartButtons;
