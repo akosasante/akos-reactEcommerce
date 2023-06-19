@@ -1,16 +1,49 @@
-import React from 'react'
-import logo from '../assets/logo.svg'
-import { Link } from 'react-router-dom'
-import { useProductsContext } from '../context/products_context'
-import { FaTimes } from 'react-icons/fa'
-import { links } from '../utils/constants'
-import styled from 'styled-components'
-import CartButtons from './CartButtons'
-import { useUserContext } from '../context/user_context'
+import React from 'react';
+import logo from '../assets/logo.jpg';
+import { Link } from 'react-router-dom'; //set up links
+import { useProductsContext } from '../context/products_context'; //set up toggle functionality globally
+import { FaTimes } from 'react-icons/fa';
+import { links } from '../utils/constants';
+import styled from 'styled-components';
+import CartButtons from './CartButtons';
+import { useUserContext } from '../context/user_context'; //gets the value if user is logged in or not (to display/hide checkout)
 
 const Sidebar = () => {
-  return <h4>sidebar</h4>
-}
+  const { isSidebarOpen, closeSidebar } = useProductsContext();
+
+  return (
+    <SidebarContainer>
+      <aside
+        className={`${isSidebarOpen ? 'sidebar show-sidebar ' : 'sidebar'}`}
+      >
+        <div className="sidebar-header">
+          <img src={logo} className="logo" alt="VIP store" />
+          <button className="close-btn" type="button" onClick={closeSidebar}>
+            <FaTimes />
+          </button>
+        </div>
+        <ul className="links">
+          {links.map(({ id, text, url }) => {
+            // destricuturing link - in id, text, url
+            return (
+              <li key={id}>
+                <Link to={url} onClick={closeSidebar}>
+                  {text}
+                </Link>
+              </li>
+            );
+          })}
+          <li>
+            <Link to="/checkout" onClick={closeSidebar}>
+              Checkout
+            </Link>
+          </li>
+        </ul>
+        <CartButtons />
+      </aside>
+    </SidebarContainer>
+  );
+};
 
 const SidebarContainer = styled.div`
   text-align: center;
@@ -66,11 +99,15 @@ const SidebarContainer = styled.div`
     height: 100%;
     background: var(--clr-white);
     transition: var(--transition);
-    transform: translate(-100%);
+    transform: translate(
+      -100%
+    ); //  moves the element to the left by 100% of its own width, effectively hiding it off the screen
     z-index: -1;
   }
   .show-sidebar {
-    transform: translate(0);
+    transform: translate(
+      0
+    ); //  brings the element back into view, effectively showing it.
     z-index: 999;
   }
   .cart-btn-wrapper {
@@ -81,6 +118,6 @@ const SidebarContainer = styled.div`
       display: none;
     }
   }
-`
+`;
 
-export default Sidebar
+export default Sidebar;

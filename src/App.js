@@ -1,9 +1,93 @@
-import React from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import { Navbar, Sidebar, Footer } from './components'
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Navbar, Sidebar, Footer } from './components';
+
+import {
+  Home,
+  Products,
+  SingleProduct,
+  About,
+  Cart,
+  Error,
+  Checkout,
+  PrivateRoute,
+} from './pages';
 
 function App() {
-  return <h4>comfy sloth starter</h4>
+  return (
+    <Router>
+      <Navbar/>
+      <Sidebar/>
+      <Switch>
+        <Route exact path = "/">
+          <Home/>
+        </Route>
+        <Route exact path = "/about">
+          <About/>
+        </Route>
+        <Route exact path = "/cart">
+          <Cart/>
+        </Route>
+        <Route exact path = "/products">
+          <Products/>
+        </Route>
+
+        <Route exact path = "/products/:id" children ={<SingleProduct/>} /> 
+        {/*  children prop provides ability to render dynamic components based on the matched route and provides access to any route parameters (such as id) within the <SingleProduct/> component */}
+        <Route exact path = "/checkout">
+          <Checkout/>
+        </Route>
+        <Route path = "*">
+          <Error/>
+        </Route>
+      </Switch>
+      <Footer/>
+    </Router>
+  );
 }
 
-export default App
+export default App;
+
+//example of creating styled components
+//import styled from 'styled-components'; // create reusable styled components with encapsulated styles
+
+// const Button = styled.button`
+//   background: green;
+//   color: white;
+// `;
+
+// const Container = styled.div`
+//   background: red;
+//   color: white;
+//   .hero { //style encapsulated
+//     font-size: 8rem;
+//   }
+// `;
+
+// const Container2 = styled.div`
+//   background: red;
+//   color: white;
+//   .hero { //style encapsulated
+//     font-size: 1rem;
+//   }
+// `;
+// function App() {
+//   return (
+//     <div>
+//       <h4>comfy sloth starter</h4>
+//       <Button>Click me</Button>
+//       <Container>
+//         <div>
+//           <h3>Hello world</h3>
+//         </div>
+//         <div className="hero">hero text</div>
+//       </Container>
+//       <Container2>
+//         <div>
+//           <h3>Hello world</h3>
+//         </div>
+//         <div className="hero">hero text</div>
+//       </Container2>
+//     </div>
+//   );
+// }
