@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useProductsContext } from '../context/products_context';
 import { single_product_url as url } from '../utils/constants';
 import { formatPrice } from '../utils/helpers';
@@ -15,7 +15,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 const SingleProductPage = () => {
   const { id } = useParams();
-  const idNumber = Number(id); //converted to number
+  
   console.log(id);
   //const navigate = useNavigate();
   const {
@@ -26,18 +26,11 @@ const SingleProductPage = () => {
   } = useProductsContext();
 //but i still cant fetch single product
   useEffect(() => {
-    fetchSingleProduct(url, idNumber);
+    fetchSingleProduct(url, id);
     // eslint-disable-next-line 
-  }, [idNumber]);
+  }, [id]);
   
-  useEffect(() => {
-    if (error) {
-      setTimeout(() => {
-       // navigate('/');
-      }, 3000);
-    }
-    // eslint-disable-next-line
-  }, [error]);
+
   if (loading) {
     return <Loading />;
   }
@@ -49,8 +42,8 @@ const SingleProductPage = () => {
     name,
     price,
     description,
-    stock,
-    stars,
+    inventory,
+    averageRating,
     reviews,
     id: sku,
     company,
@@ -67,12 +60,12 @@ const SingleProductPage = () => {
           <ProductImages image={image} />
           <section className='content'>
             <h2>{name}</h2>
-            <Stars stars={stars} reviews={reviews} />
+            <Stars stars={averageRating} reviews={reviews} />
             <h5 className='price'>{formatPrice(price)}</h5>
             <p className='desc'>{description}</p>
             <p className='info'>
               <span>Available : </span>
-              {stock > 0 ? 'In stock' : 'out of stock'}
+              {inventory > 0 ? 'In stock' : 'out of stock'}
             </p>
             <p className='info'>
               <span>SKU :</span>
@@ -83,7 +76,7 @@ const SingleProductPage = () => {
               {company}
             </p>
             <hr />
-            {stock > 0 && <AddToCart product={product} />}
+            {inventory > 0 && <AddToCart product={product} />}
           </section>
         </div>
       </div>
