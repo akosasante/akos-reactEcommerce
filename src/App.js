@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React , { useState } from 'react';
+import { BrowserRouter as Router, Switch, Route  } from 'react-router-dom';
 import { Navbar, Sidebar, Footer } from './components';
 
 import {
@@ -11,17 +11,36 @@ import {
   Error,
   Checkout,
   PrivateRoute,
+  Login,
+  Register,
+  Logout,
 } from './pages';
 
 function App() {
+
   return (
+  
     <Router>
       <Navbar/>
+
       <Sidebar/>
+
       <Switch>
         <Route exact path = "/">
           <Home/>
         </Route>
+
+        <Route exact path = "/login">
+          <Login/>
+        </Route> 
+        
+       <Route exact path = "/register">
+          <Register   />
+        </Route> 
+        <Route exact path = "/logout">
+          <Logout   />
+        </Route> 
+        
         <Route exact path = "/about">
           <About/>
         </Route>
@@ -43,6 +62,7 @@ function App() {
       </Switch>
       <Footer/>
     </Router>
+    
   );
 }
 
