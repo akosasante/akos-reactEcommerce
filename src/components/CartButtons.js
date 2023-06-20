@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import { FaShoppingCart, FaUserMinus, FaUserPlus } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { useProductsContext } from "../context/products_context";
+import React, { useState } from 'react';
+import { FaShoppingCart, FaUserMinus, FaUserPlus } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { useProductsContext } from '../context/products_context';
 
 //vart-btn-wrapper- global class- see in Navbar.js it is display none on a default screen, nested class in NavContainer = styled...
 const CartButtons = () => {
-  console.log("RENDERING CART BUTTONS");
+  console.log('RENDERING CART BUTTONS');
   const { closeSidebar } = useProductsContext(); // extracting the closeSidebar function from the returned object from useProductsContext() and assigning it to a variable named closeSidebar.
   const [isLoginVisible, setIsLoginVisible] = useState(true);
-  console.log("isLoginVisible", isLoginVisible);
+  console.log('isLoginVisible', isLoginVisible);
 
   const handleLoginClick = () => {
     setIsLoginVisible(false);
   };
 
   return (
-    <Wrapper className="cart-btn-wrapper">
-      <Link to="/login" className="cart-btn" onClick={handleLoginClick}>
+    <Wrapper className='cart-btn-wrapper'>
+      <Link to='/login' className='cart-btn' onClick={handleLoginClick}>
         {isLoginVisible && (
           <span>
             <FaUserPlus />
@@ -25,13 +25,13 @@ const CartButtons = () => {
         )}
       </Link>
 
-      <Link to="/logout" className="cart-btn" onClick={handleLoginClick}>
+      <Link to='/logout' className='cart-btn' onClick={handleLoginClick}>
         <span>
           <FaUserMinus />
         </span>
       </Link>
 
-      <Link to="/cart" className="cart-btn" onClick={closeSidebar}>
+      <Link to='/cart' className='cart-btn' onClick={closeSidebar}>
         <span>
           Cart <FaShoppingCart />
         </span>

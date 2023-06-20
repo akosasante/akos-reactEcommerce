@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 
-const rootUrl = "https://ecommerce-6kwa.onrender.com";
+const rootUrl = 'https://ecommerce-6kwa.onrender.com';
 
 const Logout = () => {
   const [redirectToHome, setRedirectToHome] = useState(false);
@@ -12,10 +12,10 @@ const Logout = () => {
       const response = await fetch(url);
 
       if (response.ok) {
-        console.log("Logout successful");
+        console.log('Logout successful');
         setRedirectToHome(true);
       } else {
-        console.log("Logout failed");
+        console.log('Logout failed');
       }
     } catch (error) {
       console.log(error);
@@ -23,7 +23,7 @@ const Logout = () => {
   };
 
   if (redirectToHome) {
-    return <Redirect to="/" />;
+    return <Redirect to='/' />;
   }
 
   return (
