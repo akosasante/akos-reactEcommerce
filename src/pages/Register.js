@@ -1,34 +1,13 @@
 import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import axios, { AxiosError } from 'axios';
-
-const rootUrl = 'https://ecommerce-6kwa.onrender.com';
+import { useUserContext } from '../context/user_context';
 
 const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [redirectToHome, setRedirectToHome] = useState(false);
-  const [registerLoading, setRegisterLoading] = useState(false);
-
-  const handleRegister = async (userCredentials) => {
-    setRegisterLoading(true);
-    try {
-      const url = `${rootUrl}/api/v1/auth/register`;
-      const response = await axios.post(url, userCredentials, {
-        withCredentials: true,
-      });
-      console.log(response);
-      setRegisterLoading(false);
-      return true;
-    } catch (error) {
-      const errorPayload =
-        error instanceof AxiosError ? error.response.data : error;
-      console.error(errorPayload);
-      setRegisterLoading(false);
-      return false;
-    }
-  };
+  const { handleRegister, authLoading, authError } = useUserContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -47,8 +26,12 @@ const Register = () => {
     return <Redirect to='/' />;
   }
 
-  if (registerLoading) {
+  if (authLoading) {
     return <span>Registering...</span>;
+  }
+
+  if (authError) {
+    return <span>Encountered error registering</span>;
   }
 
   return (

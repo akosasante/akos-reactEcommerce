@@ -1,34 +1,13 @@
 import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import axios, { AxiosError } from 'axios';
-
-const rootUrl = 'https://ecommerce-6kwa.onrender.com';
+import { useUserContext } from '../context/user_context';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [redirectToHome, setRedirectToHome] = useState(false);
   const [userName, setUserName] = useState('');
-  const [loginLoading, setLoginLoading] = useState(false);
-
-  const handleLogin = async (userCredentials) => {
-    setLoginLoading(true);
-    try {
-      const url = `${rootUrl}/api/v1/auth/login`;
-      const response = await axios.post(url, userCredentials, {
-        withCredentials: true,
-      });
-      console.log(response);
-      setLoginLoading(false);
-      return true;
-    } catch (error) {
-      const errorPayload =
-        error instanceof AxiosError ? error.response.data : error;
-      console.error(errorPayload);
-      setLoginLoading(false);
-      return false;
-    }
-  };
+  const { handleLogin, authLoading, authError } = useUserContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,8 +25,12 @@ const Login = () => {
     return <Redirect to='/' />;
   }
 
-  if (loginLoading) {
+  if (authLoading) {
     return <span>Logging in...</span>;
+  }
+
+  if (authError) {
+    return <span>Encountered error logging in</span>;
   }
 
   return (
