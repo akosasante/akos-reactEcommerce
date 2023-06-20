@@ -4,8 +4,8 @@ import AddProduct from './AddProduct';
 import { useUserContext } from '../context/user_context';
 
 const HomePage = () => {
-  const { currentUser } = useUserContext();
-  const isAdminLoggedIn = currentUser?.role === 'admin';
+  const { authState } = useUserContext();
+  const isAdminLoggedIn = authState?.currentUser?.role === 'admin';
 
   return (
     <main>

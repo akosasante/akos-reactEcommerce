@@ -4,7 +4,7 @@ import { useUserContext } from '../context/user_context';
 
 const Logout = () => {
   const [redirectToHome, setRedirectToHome] = useState(false);
-  const { handleLogout, authLoading, authError } = useUserContext();
+  const { handleLogout } = useUserContext();
 
   if (redirectToHome) {
     return <Redirect to='/' />;

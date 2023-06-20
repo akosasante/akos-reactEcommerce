@@ -7,7 +7,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [redirectToHome, setRedirectToHome] = useState(false);
   const [userName, setUserName] = useState('');
-  const { handleLogin, authLoading, authError } = useUserContext();
+  const { handleLogin } = useUserContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
