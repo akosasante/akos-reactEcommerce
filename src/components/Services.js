@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import { services } from '../utils/constants';
+import React from "react";
+import styled from "styled-components";
+import { services } from "../utils/constants";
 
 const Services = () => {
   return (
@@ -11,16 +11,22 @@ const Services = () => {
             Unique jewelry <br />
             Choose your own style
           </h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea magnam nemo dolorum excepturi, ad amet tenetur eos distinctio et cupiditate!</p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea magnam
+            nemo dolorum excepturi, ad amet tenetur eos distinctio et
+            cupiditate!
+          </p>
         </article>
         <div className="services-center">
-          {services.map((service)=>{
-            const {id, icon, title, text} = service
-            return <article key={id} className='service'>
-              <span className='icon'> {icon} </span>
-              <h4>{title}</h4>
-              <p>{text}</p>
-            </article>
+          {services.map((service) => {
+            const { id, icon, title, text } = service;
+            return (
+              <article key={id} className="service">
+                <span className="icon"> {icon} </span>
+                <h4>{title}</h4>
+                <p>{text}</p>
+              </article>
+            );
           })}
         </div>
       </div>

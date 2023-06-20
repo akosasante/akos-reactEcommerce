@@ -1,25 +1,33 @@
-import React from 'react'
-import styled from 'styled-components'
-import { PageHero } from '../components'
-import aboutImg from '../assets/hero-bcg.jpg'
+import React from "react";
+import styled from "styled-components";
+import { PageHero } from "../components";
+import aboutImg from "../assets/hero-bcg.jpg";
 
 const AboutPage = () => {
-  return (<main>
-    <PageHero title="about" />
-    <Wrapper className='page section section-center'> 
-    {/* global classes- check index.css */}
-      <img src={aboutImg} alt="About image" />
-      <article>
-        <div className="title">
-          <h2>Our story</h2>
-          <div className="underline"></div>
-        </div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi repellendus soluta aut explicabo, sequi nostrum sapiente ducimus quo beatae doloremque odio vero voluptatum consectetur accusamus voluptate voluptatibus id nemo rerum fugiat saepe aperiam non, quam fugit tempore. In vero neque itaque? Quidem, nisi illo sapiente delectus quod ipsa debitis iste?</p>
-      </article>
-    </Wrapper>
-  </main>
-  )
-}
+  return (
+    <main>
+      <PageHero title="about" />
+      <Wrapper className="page section section-center">
+        {/* global classes- check index.css */}
+        <img src={aboutImg} alt="About image" />
+        <article>
+          <div className="title">
+            <h2>Our story</h2>
+            <div className="underline"></div>
+          </div>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi
+            repellendus soluta aut explicabo, sequi nostrum sapiente ducimus quo
+            beatae doloremque odio vero voluptatum consectetur accusamus
+            voluptate voluptatibus id nemo rerum fugiat saepe aperiam non, quam
+            fugit tempore. In vero neque itaque? Quidem, nisi illo sapiente
+            delectus quod ipsa debitis iste?
+          </p>
+        </article>
+      </Wrapper>
+    </main>
+  );
+};
 
 const Wrapper = styled.section`
   display: grid;
@@ -47,5 +55,5 @@ const Wrapper = styled.section`
   @media (min-width: 992px) {
     grid-template-columns: 1fr 1fr;
   }
-`
-export default AboutPage
+`;
+export default AboutPage;

@@ -1,47 +1,41 @@
-import React , { useState }from 'react';
-import { FaShoppingCart, FaUserMinus, FaUserPlus } from 'react-icons/fa';
-import { Link, Route, Switch } from 'react-router-dom';
-import styled from 'styled-components';
-import { useProductsContext } from '../context/products_context';
-import { useCartContext } from '../context/cart_context';
-
-import { Login, Logout } from '../pages';
+import React, { useState } from "react";
+import { FaShoppingCart, FaUserMinus, FaUserPlus } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { useProductsContext } from "../context/products_context";
 
 //vart-btn-wrapper- global class- see in Navbar.js it is display none on a default screen, nested class in NavContainer = styled...
 const CartButtons = () => {
+  console.log("RENDERING CART BUTTONS");
   const { closeSidebar } = useProductsContext(); // extracting the closeSidebar function from the returned object from useProductsContext() and assigning it to a variable named closeSidebar.
-  const [isLoginVisible, setIsLoginVisible] = useState(false);
+  const [isLoginVisible, setIsLoginVisible] = useState(true);
+  console.log("isLoginVisible", isLoginVisible);
 
   const handleLoginClick = () => {
-    setIsLoginVisible(true);
+    setIsLoginVisible(false);
   };
 
   return (
     <Wrapper className="cart-btn-wrapper">
-
-     <Link to="/login" className="cart-btn" onClick={handleLoginClick}>
-        {isLoginVisible }
-        <span >
-          <FaUserPlus />
-        </span>
+      <Link to="/login" className="cart-btn" onClick={handleLoginClick}>
+        {isLoginVisible && (
+          <span>
+            <FaUserPlus />
+          </span>
+        )}
       </Link>
 
       <Link to="/logout" className="cart-btn" onClick={handleLoginClick}>
-      
-        <span >
-      
-        <FaUserMinus/>
+        <span>
+          <FaUserMinus />
         </span>
       </Link>
 
       <Link to="/cart" className="cart-btn" onClick={closeSidebar}>
-        
-        <span > 
-              Cart <FaShoppingCart />
-
+        <span>
+          Cart <FaShoppingCart />
         </span>
       </Link>
-
     </Wrapper>
   );
 };
@@ -52,7 +46,6 @@ const Wrapper = styled.div`
   align-items: center;
   width: 150px;
 
- 
   .cart-btn {
     color: var(--clr-grey-1);
     font-size: 1.2rem;

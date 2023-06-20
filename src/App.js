@@ -1,6 +1,6 @@
-import React , { useState } from 'react';
-import { BrowserRouter as Router, Switch, Route  } from 'react-router-dom';
-import { Navbar, Sidebar, Footer } from './components';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Navbar, Sidebar, Footer } from "./components";
 
 import {
   Home,
@@ -14,55 +14,52 @@ import {
   Login,
   Register,
   Logout,
-} from './pages';
+} from "./pages";
 
 function App() {
-
   return (
-  
     <Router>
-      <Navbar/>
+      <Navbar />
 
-      <Sidebar/>
+      <Sidebar />
 
       <Switch>
-        <Route exact path = "/">
-          <Home/>
+        <Route exact path="/">
+          <Home />
         </Route>
 
-        <Route exact path = "/login">
-          <Login/>
-        </Route> 
-        
-       <Route exact path = "/register">
-          <Register   />
-        </Route> 
-        <Route exact path = "/logout">
-          <Logout   />
-        </Route> 
-        
-        <Route exact path = "/about">
-          <About/>
-        </Route>
-        <Route exact path = "/cart">
-          <Cart/>
-        </Route>
-        <Route exact path = "/products">
-          <Products/>
+        <Route exact path="/login">
+          <Login />
         </Route>
 
-        <Route exact path = "/products/:id" children ={<SingleProduct/>} /> 
+        <Route exact path="/register">
+          <Register />
+        </Route>
+        <Route exact path="/logout">
+          <Logout />
+        </Route>
+
+        <Route exact path="/about">
+          <About />
+        </Route>
+        <Route exact path="/cart">
+          <Cart />
+        </Route>
+        <Route exact path="/products">
+          <Products />
+        </Route>
+
+        <Route exact path="/products/:id" children={<SingleProduct />} />
         {/*  children prop provides ability to render dynamic components based on the matched route and provides access to any route parameters (such as id) within the <SingleProduct/> component */}
-        <Route exact path = "/checkout">
-          <Checkout/>
+        <Route exact path="/checkout">
+          <Checkout />
         </Route>
-        <Route path = "*">
-          <Error/>
+        <Route path="*">
+          <Error />
         </Route>
       </Switch>
-      <Footer/>
+      <Footer />
     </Router>
-    
   );
 }
 

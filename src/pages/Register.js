@@ -1,29 +1,29 @@
-import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-const rootUrl = 'https://ecommerce-6kwa.onrender.com';
+import React, { useState } from "react";
+import { Link, Redirect } from "react-router-dom";
+const rootUrl = "https://ecommerce-6kwa.onrender.com";
 
 const Register = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [redirectToHome, setRedirectToHome] = useState(false);
 
   const handleRegister = async (user) => {
     try {
       const url = `${rootUrl}/api/v1/auth/register`;
       const response = await fetch(url, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(user),
       });
 
       if (response.ok) {
-        console.log('Registration successful');
+        console.log("Registration successful");
         return true;
       } else {
-        console.log('Registration failed');
+        console.log("Registration failed");
         return false;
       }
     } catch (error) {
@@ -38,9 +38,9 @@ const Register = () => {
     const user = { name, email, password };
     const success = await handleRegister(user);
     if (success) {
-      setName('');
-      setEmail('');
-      setPassword('');
+      setName("");
+      setEmail("");
+      setPassword("");
       setRedirectToHome(true);
     }
   };

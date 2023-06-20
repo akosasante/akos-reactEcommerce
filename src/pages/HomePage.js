@@ -1,15 +1,14 @@
-import React from 'react';
-import { FeaturedProducts, Hero, Services, Contact } from '../components';
-  import AddProduct from './AddProduct';
+import React from "react";
+import { FeaturedProducts, Hero, Services, Contact } from "../components";
+import AddProduct from "./AddProduct";
 
 const HomePage = () => {
-
   // need to check here if user.role === 'admin'- show <AddProduct/> component
 
   return (
     <main>
       <Hero />
-      <AddProduct/>
+      <AddProduct />
       <FeaturedProducts />
       <Services />
       <Contact />

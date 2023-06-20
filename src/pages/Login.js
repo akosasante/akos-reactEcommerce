@@ -1,30 +1,30 @@
-import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-const rootUrl = 'https://ecommerce-6kwa.onrender.com';
+import React, { useState } from "react";
+import { Link, Redirect } from "react-router-dom";
+const rootUrl = "https://ecommerce-6kwa.onrender.com";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [redirectToHome, setRedirectToHome] = useState(false);
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState("");
 
-const handleLogin = async (user) => {
+  const handleLogin = async (user) => {
     try {
       const url = `${rootUrl}/api/v1/auth/login`;
       const response = await fetch(url, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(user),
       });
-  
+
       if (response.ok) {
-        console.log('Login successful');
+        console.log("Login successful");
         setUserName(user.name);
         return true;
       } else {
-        console.log('Login failed');
+        console.log("Login failed");
         return false;
       }
     } catch (error) {
@@ -39,8 +39,8 @@ const handleLogin = async (user) => {
     const user = { email, password };
     const success = await handleLogin(user);
     if (success) {
-      setEmail('');
-      setPassword('');
+      setEmail("");
+      setPassword("");
       setRedirectToHome(true);
     }
   };
@@ -56,11 +56,19 @@ const handleLogin = async (user) => {
       <form onSubmit={handleSubmit}>
         <div>
           <label>Email</label>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
         <div>
           <label>Password</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
         <button type="submit">Login</button>
       </form>

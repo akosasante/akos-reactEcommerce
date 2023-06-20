@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useProductsContext } from '../context/products_context';
-import { single_product_url as url } from '../utils/constants';
-import { formatPrice } from '../utils/helpers';
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useProductsContext } from "../context/products_context";
+import { single_product_url as url } from "../utils/constants";
+import { formatPrice } from "../utils/helpers";
 import {
   Loading,
   Error,
@@ -10,12 +10,12 @@ import {
   AddToCart,
   Stars,
   PageHero,
-} from '../components';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+} from "../components";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 const SingleProductPage = () => {
   const { id } = useParams();
-  
+
   console.log(id);
   //const navigate = useNavigate();
   const {
@@ -24,12 +24,11 @@ const SingleProductPage = () => {
     single_product: product,
     fetchSingleProduct,
   } = useProductsContext();
-//but i still cant fetch single product
+  //but i still cant fetch single product
   useEffect(() => {
     fetchSingleProduct(url, id);
-    // eslint-disable-next-line 
+    // eslint-disable-next-line
   }, [id]);
-  
 
   if (loading) {
     return <Loading />;
@@ -52,26 +51,26 @@ const SingleProductPage = () => {
   return (
     <Wrapper>
       <PageHero title={name} product />
-      <div className='section section-center page'>
-        <Link to='/products' className='btn'>
+      <div className="section section-center page">
+        <Link to="/products" className="btn">
           back to products
         </Link>
-        <div className='product-center'>
+        <div className="product-center">
           <ProductImages image={image} />
-          <section className='content'>
+          <section className="content">
             <h2>{name}</h2>
             <Stars stars={averageRating} reviews={reviews} />
-            <h5 className='price'>{formatPrice(price)}</h5>
-            <p className='desc'>{description}</p>
-            <p className='info'>
+            <h5 className="price">{formatPrice(price)}</h5>
+            <p className="desc">{description}</p>
+            <p className="info">
               <span>Available : </span>
-              {inventory > 0 ? 'In stock' : 'out of stock'}
+              {inventory > 0 ? "In stock" : "out of stock"}
             </p>
-            <p className='info'>
+            <p className="info">
               <span>SKU :</span>
               {sku}
             </p>
-            <p className='info'>
+            <p className="info">
               <span>Brand :</span>
               {company}
             </p>
