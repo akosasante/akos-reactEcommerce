@@ -24,6 +24,7 @@ const initialState = {
 };
 
 const UserContext = React.createContext();
+
 export const UserProvider = ({ children }) => {
   const [authState, dispatch] = useReducer(auth_reducer, initialState);
 

@@ -7,7 +7,7 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [redirectToHome, setRedirectToHome] = useState(false);
-  const { handleRegister } = useUserContext();
+  const { handleRegister, authState } = useUserContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,11 +26,11 @@ const Register = () => {
     return <Redirect to='/' />;
   }
 
-  if (authLoading) {
+  if (authState?.authLoading) {
     return <span>Registering...</span>;
   }
 
-  if (authError) {
+  if (authState?.authError) {
     return <span>Encountered error registering</span>;
   }
 

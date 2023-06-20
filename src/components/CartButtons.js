@@ -9,11 +9,12 @@ import { useUserContext } from '../context/user_context';
 const CartButtons = () => {
   const { closeSidebar } = useProductsContext(); // extracting the closeSidebar function from the returned object from useProductsContext() and assigning it to a variable named closeSidebar.
   const { authState } = useUserContext();
+  // console.dir(authState)
 
   return (
     <Wrapper className='cart-btn-wrapper'>
-      {!authState?.currentUser && ( <Link to='/login' className='cart-btn'>
-        <span>{authState?.currentUser?.name}</span>
+      {!authState?.currentUser && (
+        <Link to='/login' className='cart-btn'>
           <span>
             <FaUserPlus />
           </span>
@@ -22,6 +23,7 @@ const CartButtons = () => {
 
       {authState?.currentUser && (
         <Link to='/logout' className='cart-btn'>
+          <span>{authState?.currentUser?.name}</span>
           <span>
             <FaUserMinus />
           </span>

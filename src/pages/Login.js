@@ -7,7 +7,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [redirectToHome, setRedirectToHome] = useState(false);
   const [userName, setUserName] = useState('');
-  const { handleLogin } = useUserContext();
+  const { handleLogin, authState } = useUserContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,11 +25,11 @@ const Login = () => {
     return <Redirect to='/' />;
   }
 
-  if (authLoading) {
+  if (authState?.authLoading) {
     return <span>Logging in...</span>;
   }
 
-  if (authError) {
+  if (authState?.authError) {
     return <span>Encountered error logging in</span>;
   }
 
