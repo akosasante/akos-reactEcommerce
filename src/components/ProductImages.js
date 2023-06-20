@@ -1,9 +1,15 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-const ProductImages = () => {
-  return <h4>product images</h4>
+const ProductImages = ({image}) => {
+  console.log(image);
+  //const [main, setMain] =useState(image) //for an array of images
+  return <Wrapper>
+    <img src={image} alt="main image" className='main' />
+  </Wrapper>
 }
+
+//see 448 to set up an array of images
 
 const Wrapper = styled.section`
   .main {
