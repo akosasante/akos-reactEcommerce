@@ -1,37 +1,38 @@
-import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-const rootUrl = 'https://ecommerce-6kwa.onrender.com';
+import React, { useState } from "react";
+import { Link, Redirect } from "react-router-dom";
+import { useUserContext } from "../context/user_context";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [redirectToHome, setRedirectToHome] = useState(false);
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState("");
+  const { handleLogin } = useUserContext();
 
-  const handleLogin = async (user) => {
-    try {
-      const url = `${rootUrl}/api/v1/auth/login`;
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(user),
-      });
-
-      if (response.ok) {
-        console.log('Login successful');
-        setUserName(user.name);
-        return true;
-      } else {
-        console.log('Login failed');
-        return false;
-      }
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
-  };
+  // const handleLogin = async (user) => {
+  //   try {
+  //     const url = `${rootUrl}/api/v1/auth/login`;
+  //     const response = await fetch(url, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(user),
+  //     });
+  //
+  //     if (response.ok) {
+  //       console.log("Login successful");
+  //       setUserName(user.name);
+  //       return true;
+  //     } else {
+  //       console.log("Login failed");
+  //       return false;
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     return false;
+  //   }
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,14 +40,14 @@ const Login = () => {
     const user = { email, password };
     const success = await handleLogin(user);
     if (success) {
-      setEmail('');
-      setPassword('');
+      setEmail("");
+      setPassword("");
       setRedirectToHome(true);
     }
   };
 
   if (redirectToHome) {
-    return <Redirect to='/' />;
+    return <Redirect to="/" />;
   }
 
   return (
@@ -57,7 +58,7 @@ const Login = () => {
         <div>
           <label>Email</label>
           <input
-            type='email'
+            type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -65,15 +66,15 @@ const Login = () => {
         <div>
           <label>Password</label>
           <input
-            type='password'
+            type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type='submit'>Login</button>
+        <button type="submit">Login</button>
       </form>
       <p>
-        Don't have an account? <Link to='/register'>Register</Link>
+        Don't have an account? <Link to="/register">Register</Link>
       </p>
     </div>
   );
