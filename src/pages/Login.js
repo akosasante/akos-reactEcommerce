@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import axios, { AxiosError } from 'axios';
+
 const rootUrl = 'https://ecommerce-6kwa.onrender.com';
 
 const Login = () => {
@@ -7,28 +9,23 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [redirectToHome, setRedirectToHome] = useState(false);
   const [userName, setUserName] = useState('');
+  const [loginLoading, setLoginLoading] = useState(false);
 
-  const handleLogin = async (user) => {
+  const handleLogin = async (userCredentials) => {
+    setLoginLoading(true);
     try {
       const url = `${rootUrl}/api/v1/auth/login`;
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(user),
+      const response = await axios.post(url, userCredentials, {
+        withCredentials: true,
       });
-
-      if (response.ok) {
-        console.log('Login successful');
-        setUserName(user.name);
-        return true;
-      } else {
-        console.log('Login failed');
-        return false;
-      }
+      console.log(response);
+      setLoginLoading(false);
+      return true;
     } catch (error) {
-      console.log(error);
+      const errorPayload =
+        error instanceof AxiosError ? error.response.data : error;
+      console.error(errorPayload);
+      setLoginLoading(false);
       return false;
     }
   };
@@ -47,6 +44,10 @@ const Login = () => {
 
   if (redirectToHome) {
     return <Redirect to='/' />;
+  }
+
+  if (loginLoading) {
+    return <span>Logging in...</span>;
   }
 
   return (

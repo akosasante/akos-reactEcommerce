@@ -18,11 +18,23 @@ const AddProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const formData = new FormData(); // instantiate a 'form-data' object in the browser to upload the image file
+    formData.set('image', image);
+    const imageResponse = await axios.post(
+      'https://ecommerce-6kwa.onrender.com/api/v1/products/uploadImage',
+      formData,
+      {
+        withCredentials: true,
+        headers: { 'Content-Type': 'multipart/form-data' },
+      }
+    );
+    console.dir(imageResponse);
+
     const product = {
       name,
       price,
       description,
-      image,
+      image: imageResponse.data.image,
       category,
       company,
       colors,
@@ -34,7 +46,8 @@ const AddProduct = () => {
     try {
       const response = await axios.post(
         'https://ecommerce-6kwa.onrender.com/api/v1/products',
-        product
+        product,
+        { withCredentials: true }
       );
       console.log('Product added successfully:', response.data);
       // Reset form fields
@@ -82,11 +95,7 @@ const AddProduct = () => {
         </div>
         <div>
           <label>Image</label>
-          <input
-            type='text'
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-          />
+          <input type='file' onChange={(e) => setImage(e.target.files[0])} />
         </div>
         <div>
           <label>Category</label>
@@ -113,7 +122,7 @@ const AddProduct = () => {
           <label>Colors</label>
           <input
             type='text'
-            value={colors.join(',')}
+            value={(colors || []).join(',')}
             onChange={(e) => setColors(e.target.value.split(','))}
           />
         </div>
