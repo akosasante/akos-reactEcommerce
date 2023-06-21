@@ -8,11 +8,12 @@ import { useUserContext } from '../context/user_context';
 //vart-btn-wrapper- global class- see in Navbar.js it is display none on a default screen, nested class in NavContainer = styled...
 const CartButtons = () => {
   const { closeSidebar } = useProductsContext(); // extracting the closeSidebar function from the returned object from useProductsContext() and assigning it to a variable named closeSidebar.
-  const { currentUser } = useUserContext();
+  const { authState } = useUserContext();
+  // console.dir(authState)
 
   return (
     <Wrapper className='cart-btn-wrapper'>
-      {!currentUser && (
+      {!authState?.currentUser && (
         <Link to='/login' className='cart-btn'>
           <span>
             <FaUserPlus />
@@ -20,9 +21,9 @@ const CartButtons = () => {
         </Link>
       )}
 
-      {currentUser && (
+      {authState?.currentUser && (
         <Link to='/logout' className='cart-btn'>
-          <span>{currentUser?.name}</span>
+          <span>{authState?.currentUser?.name}</span>
           <span>
             <FaUserMinus />
           </span>
