@@ -14,18 +14,23 @@ const HomePage = () => {
         .get(url, { withCredentials: true })
         .then((response) => {
           console.log(response);
-          setCurrentUser(response.data.user);
+
+          // if (response && response.data && response.data.user) {
+          //   return response.data.user;
+          // }
+
+          setCurrentUser(response?.data?.user);
         })
         .catch((error) => {
           const errorPayload =
-            error instanceof AxiosError ? error.response.data : error;
+            error instanceof AxiosError ? error?.response?.data : error;
           console.error(errorPayload);
         });
     }
     fetchData();
     // By using empty array [], for the "dependencies" argument of useEffect, it tells React to run this useEffect hook only *once*, the first time this component/context is rendered
   }, []);
-  
+
   const isAdminLoggedIn = currentUser?.role === 'admin';
   return (
     <main>

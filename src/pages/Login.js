@@ -18,12 +18,16 @@ const Login = () => {
         withCredentials: true,
       });
 
+     
+
+
+
       console.log(response);
       setLoginLoading(false);
       return true;
     } catch (error) {
       const errorPayload =
-        error instanceof AxiosError ? error.response.data : error;
+        error instanceof AxiosError ? error?.response?.data : error;
       console.error(errorPayload);
       setLoginLoading(false);
       return false;

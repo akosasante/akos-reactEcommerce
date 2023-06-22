@@ -23,7 +23,7 @@ const Register = () => {
       return true;
     } catch (error) {
       const errorPayload =
-        error instanceof AxiosError ? error.response.data : error;
+        error instanceof AxiosError ? error?.response?.data : error;
       console.error(errorPayload);
       setRegisterLoading(false);
 

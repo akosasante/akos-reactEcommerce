@@ -50,16 +50,16 @@ const AddProduct = () => {
       );
       console.log('Product added successfully:', response.data);
       // Reset form fields
-      setName(response.data.name);
-      setPrice(response.data.price);
-      setDescription(response.data.description);
-      setImage(response.data.image);
-      setCategory(response.data.category);
-      setCompany(response.data.company);
+      setName(response?.data?.name);
+      setPrice(response?.data?.price);
+      setDescription(response?.data?.description);
+      setImage(response?.data?.image);
+      setCategory(response?.data?.category);
+      setCompany(response?.data?.company);
 
-      setFeatured(response.data.featured);
-      setFreeShipping(response.data.freeShipping);
-      setInventory(response.data.inventory);
+      setFeatured(response?.data?.featured);
+      setFreeShipping(response?.data?.freeShipping);
+      setInventory(response?.data?.inventory);
     } catch (error) {
       console.log('Error adding product:', error);
     }
