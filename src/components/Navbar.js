@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { links } from '../utils/constants'
 import CartButtons from './CartButtons'
 import { useProductsContext } from '../context/products_context'
-import { useUserContext } from '../context/user_context'
+
 
 
 const Nav = () => {
@@ -91,7 +91,7 @@ const NavContainer = styled.nav`
       }
       a {
         color: var(--clr-grey-3);
-        font-size: 1rem;
+        font-size: 1.5rem;
         text-transform: capitalize;
         letter-spacing: var(--spacing);
         padding: 0.5rem;

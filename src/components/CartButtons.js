@@ -1,4 +1,4 @@
-import React , { useState }from 'react';
+import React, { useState } from 'react';
 import { FaShoppingCart, FaUserMinus, FaUserPlus } from 'react-icons/fa';
 import { Link, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
@@ -10,6 +10,7 @@ import { Login, Logout } from '../pages';
 //vart-btn-wrapper- global class- see in Navbar.js it is display none on a default screen, nested class in NavContainer = styled...
 const CartButtons = () => {
   const { closeSidebar } = useProductsContext(); // extracting the closeSidebar function from the returned object from useProductsContext() and assigning it to a variable named closeSidebar.
+  const { total_items } = useCartContext();
   const [isLoginVisible, setIsLoginVisible] = useState(false);
 
   const handleLoginClick = () => {
@@ -18,30 +19,27 @@ const CartButtons = () => {
 
   return (
     <Wrapper className="cart-btn-wrapper">
-
-     <Link to="/login" className="cart-btn" onClick={handleLoginClick}>
-        {isLoginVisible }
-        <span >
+      <Link to="/login" className="cart-btn" onClick={handleLoginClick}>
+        {isLoginVisible}
+        <span>
           <FaUserPlus />
         </span>
       </Link>
 
       <Link to="/logout" className="cart-btn" onClick={handleLoginClick}>
-      
-        <span >
-      
-        <FaUserMinus/>
+        <span>
+          <FaUserMinus />
         </span>
       </Link>
 
-      <Link to="/cart" className="cart-btn" onClick={closeSidebar}>
-        
-        <span > 
-              Cart <FaShoppingCart />
-
+      <Link to='/cart' className='cart-btn' onClick={closeSidebar}>
+        Cart
+        <span className='cart-container'>
+          <FaShoppingCart />
+          <span className='cart-value'>{total_items}</span>
         </span>
       </Link>
-
+      
     </Wrapper>
   );
 };
@@ -52,7 +50,6 @@ const Wrapper = styled.div`
   align-items: center;
   width: 150px;
 
- 
   .cart-btn {
     color: var(--clr-grey-1);
     font-size: 1.2rem;
@@ -68,7 +65,7 @@ const Wrapper = styled.div`
     position: relative;
     svg {
       height: 1.6rem;
-      //margin-left:0 px;
+  
     }
   }
   .cart-value {
