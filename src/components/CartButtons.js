@@ -1,36 +1,57 @@
-import React, { useState } from 'react';
+import React , { useState, useEffect }from 'react';
 import { FaShoppingCart, FaUserMinus, FaUserPlus } from 'react-icons/fa';
 import { Link, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 import { useProductsContext } from '../context/products_context';
 import { useCartContext } from '../context/cart_context';
+import axios, { AxiosError } from 'axios';
 
-import { Login, Logout } from '../pages';
+const rootUrl = 'https://ecommerce-6kwa.onrender.com';
+
 
 //vart-btn-wrapper- global class- see in Navbar.js it is display none on a default screen, nested class in NavContainer = styled...
 const CartButtons = () => {
   const { closeSidebar } = useProductsContext(); // extracting the closeSidebar function from the returned object from useProductsContext() and assigning it to a variable named closeSidebar.
-  const { total_items } = useCartContext();
-  const [isLoginVisible, setIsLoginVisible] = useState(false);
 
-  const handleLoginClick = () => {
-    setIsLoginVisible(true);
-  };
+  const { total_items } = useCartContext();
+  const [currentUser, setCurrentUser] = useState(null);
+  useEffect(() => {
+    async function fetchData() {
+      const url = `${rootUrl}/api/v1/users/showMe`;
+      axios
+        .get(url, { withCredentials: true })
+        .then((response) => {
+          console.log(response);
+          setCurrentUser(response.data.user);
+        })
+        .catch((error) => {
+          const errorPayload =
+            error instanceof AxiosError ? error.response.data : error;
+          console.error(errorPayload);
+        });
+    }
+    fetchData();
+    // By using empty array [], for the "dependencies" argument of useEffect, it tells React to run this useEffect hook only *once*, the first time this component/context is rendered
+  }, []);
 
   return (
     <Wrapper className="cart-btn-wrapper">
-      <Link to="/login" className="cart-btn" onClick={handleLoginClick}>
-        {isLoginVisible}
-        <span>
-          <FaUserPlus />
-        </span>
-      </Link>
+{!currentUser && (
+  <Link to='/login' className='cart-btn'>
+          <span>
+            <FaUserPlus />
+          </span>
+          </Link>
+      )}
 
-      <Link to="/logout" className="cart-btn" onClick={handleLoginClick}>
-        <span>
-          <FaUserMinus />
-        </span>
-      </Link>
+{currentUser && (
+    <Link to='/logout' className='cart-btn'>
+    <span>{currentUser?.name}</span>
+    <span>
+      <FaUserMinus />
+    </span>
+  </Link>
+)}
 
       <Link to='/cart' className='cart-btn' onClick={closeSidebar}>
         Cart
@@ -49,6 +70,7 @@ const Wrapper = styled.div`
   grid-template-columns: 1fr 1fr;
   align-items: center;
   width: 150px;
+
 
   .cart-btn {
     color: var(--clr-grey-1);
