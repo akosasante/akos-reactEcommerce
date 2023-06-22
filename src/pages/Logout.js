@@ -8,11 +8,13 @@ const Logout = () => {
   const [redirectToHome, setRedirectToHome] = useState(false);
   const [logoutLoading, setLogoutLoading] = useState(false);
 
-  const handleLogout = async () => {
+  const handleLogout = async (userCredentials) => {
     setLogoutLoading(true);
     try {
       const url = `${rootUrl}/api/v1/auth/logout`;
-      const response = await axios.get(url);
+      const response = await axios.get(url, userCredentials, {
+        withCredentials: true,
+      });
       console.log(response);
       setLogoutLoading(false);
       return true;
