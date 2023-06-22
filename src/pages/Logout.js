@@ -21,7 +21,7 @@ const Logout = () => {
     } catch (error) {
       console.log(error);
       const errorPayload =
-        error instanceof AxiosError ? error.response.data : error;
+        error instanceof AxiosError ? error?.response?.data : error;
       console.error(errorPayload);
       setLogoutLoading(false);
       return false;
