@@ -7,14 +7,13 @@ const PageHero = ({ title, product }) => {
       <div className="section-center">
         <h3>
           <Link to="/">Home</Link> 
-          {product && <Link to='/products'>/ Products </Link>}
-          /{title}
+          {product && <Link to='/products'>/ Products </Link>} /{title}
         </h3>
       </div>
     </Wrapper>
   );
 };
-
+//if product property is true, return link to /products
 const Wrapper = styled.section`
   background: var(--clr-primary-10);
   width: 100%;

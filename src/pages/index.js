@@ -6,6 +6,10 @@ import Cart from './CartPage';
 import Error from './ErrorPage';
 import Checkout from './CheckoutPage';
 import PrivateRoute from './PrivateRoute';
+import Login from './Login';
+import Register from './Register';
+import Logout from './Logout';
+import AddProduct from './AddProduct';
 
 export {
   Home,
@@ -16,4 +20,8 @@ export {
   Error,
   Checkout,
   PrivateRoute,
+  Login,
+  Register,
+  Logout,
+  AddProduct,
 };

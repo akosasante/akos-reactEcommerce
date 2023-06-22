@@ -1,28 +1,47 @@
-import React from 'react';
+import React , { useState }from 'react';
 import { FaShoppingCart, FaUserMinus, FaUserPlus } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 import { useProductsContext } from '../context/products_context';
 import { useCartContext } from '../context/cart_context';
-import { useUserContext } from '../context/user_context';
+
+import { Login, Logout } from '../pages';
 
 //vart-btn-wrapper- global class- see in Navbar.js it is display none on a default screen, nested class in NavContainer = styled...
 const CartButtons = () => {
   const { closeSidebar } = useProductsContext(); // extracting the closeSidebar function from the returned object from useProductsContext() and assigning it to a variable named closeSidebar.
+  const [isLoginVisible, setIsLoginVisible] = useState(false);
+
+  const handleLoginClick = () => {
+    setIsLoginVisible(true);
+  };
 
   return (
     <Wrapper className="cart-btn-wrapper">
-      <Link to="/cart" className="cart-btn" onClick={closeSidebar}>
-        Cart
-        <span className="cart-container">
-          <FaShoppingCart />
-          <span className="cart-value">12</span>
+
+     <Link to="/login" className="cart-btn" onClick={handleLoginClick}>
+        {isLoginVisible }
+        <span >
+          <FaUserPlus />
         </span>
       </Link>
-      <button type="button" className="auth-btn">
-        Login
-        <FaUserPlus />
-      </button>
+
+      <Link to="/logout" className="cart-btn" onClick={handleLoginClick}>
+      
+        <span >
+      
+        <FaUserMinus/>
+        </span>
+      </Link>
+
+      <Link to="/cart" className="cart-btn" onClick={closeSidebar}>
+        
+        <span > 
+              Cart <FaShoppingCart />
+
+        </span>
+      </Link>
+
     </Wrapper>
   );
 };
@@ -31,11 +50,12 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  width: 225px;
+  width: 150px;
 
+ 
   .cart-btn {
     color: var(--clr-grey-1);
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     letter-spacing: var(--spacing);
     color: var(--clr-grey-1);
     display: flex;
@@ -48,7 +68,7 @@ const Wrapper = styled.div`
     position: relative;
     svg {
       height: 1.6rem;
-      margin-left: 5px;
+      //margin-left:0 px;
     }
   }
   .cart-value {

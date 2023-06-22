@@ -1,12 +1,126 @@
-import React from 'react'
-import styled from 'styled-components'
-import { useFilterContext } from '../context/filter_context'
-import { getUniqueValues, formatPrice } from '../utils/helpers'
-import { FaCheck } from 'react-icons/fa'
+import React from 'react';
+import styled from 'styled-components';
+import { useFilterContext } from '../context/filter_context';
+import { getUniqueValues, formatPrice } from '../utils/helpers';
 
 const Filters = () => {
-  return <h4>filters</h4>
-}
+  const {
+    filters: {
+      text,
+      category,
+      company,
+      min_price,
+      price,
+      max_price,
+      freeShipping,
+    },
+    updateFilters,
+    clearFilters,
+    all_products,
+  } = useFilterContext();
+
+  const categories = getUniqueValues(all_products, 'category');
+  const companies = getUniqueValues(all_products, 'company');
+
+  //console.log(categories);
+  // console.log(companies);
+  return (
+    <Wrapper>
+      <div className="content">
+        <form onSubmit={(e) => e.preventDefault()}>
+          {/*search input*/}
+          <div className="form-control">
+            <input
+              type="text"
+              name="text"
+              placeholder="search"
+              className="search-input"
+              value={text}
+              onChange={updateFilters}
+            />
+          </div>
+          {/*end of the search input*/}
+
+          {/*categories*/}
+          <div className="form-control">
+            <h5>category</h5>
+            <div>
+              {categories.map((category, index) => {
+                return (
+                  <button
+                    key={index}
+                    onClick={updateFilters}
+                    name="category"
+                    type="button"
+                    className={`${
+                      categories === category.toLowerCase() ? 'active' : null
+                    }`}
+                  >
+                    {category}
+
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          {/*end of categories*/}
+
+          {/*companies*/}
+          <div className="form-control">
+            <h5>company</h5>
+            <select
+              name="company"
+              value={company}
+              onChange={updateFilters}
+              className="company"
+            >
+              {companies.map((company, index) => {
+                return (
+                  <option key={index} value={company}>
+                    {company}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          {/*end of companies*/}
+
+          {/* price */}
+          <div className="form-control">
+            <h5>price</h5>
+            <p className="price">{formatPrice(price)}</p>
+            <input
+              type="range"
+              name="price"
+              onChange={updateFilters}
+              min={min_price}
+              max={max_price}
+              value={price}
+            />
+          </div>
+
+          {/* end of price */}
+
+          {/* shipping */}
+          <div className="form-control-shippig">
+            <label htmlFor="freeShipping"> free shipping</label>
+            <input
+              type="checkbox"
+              name="freeShipping"
+              id="freeShipping"
+              onChange={updateFilters}
+              checked={freeShipping}
+            />
+          </div>
+
+          {/* end of shipping */}
+        </form>
+
+        <button type='button' className='clear-btn' onClick={clearFilters}>clear filters</button>
+      </div>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.section`
   .form-control {
@@ -37,9 +151,11 @@ const Wrapper = styled.section`
     letter-spacing: var(--spacing);
     color: var(--clr-grey-5);
     cursor: pointer;
+    
   }
   .active {
     border-color: var(--clr-grey-5);
+ 
   }
   .company {
     background: var(--clr-grey-10);
@@ -106,6 +222,6 @@ const Wrapper = styled.section`
       top: 1rem;
     }
   }
-`
+`;
 
-export default Filters
+export default Filters;
