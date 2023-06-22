@@ -1,41 +1,46 @@
 import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import axios, { AxiosError } from 'axios';
 import styled from 'styled-components';
 const rootUrl = 'https://ecommerce-6kwa.onrender.com';
 
 const Logout = () => {
   const [redirectToHome, setRedirectToHome] = useState(false);
+  const [logoutLoading, setLogoutLoading] = useState(false);
 
   const handleLogout = async () => {
+    setLogoutLoading(true);
     try {
       const url = `${rootUrl}/api/v1/auth/logout`;
-      const response = await fetch(url);
-
-      if (response.ok) {
-        console.log('Logout successful');
-        setRedirectToHome(true);
-      } else {
-        console.log('Logout failed');
-       
-      }
+      const response = await axios.get(url);
+      console.log(response);
+      setLogoutLoading(false);
+      return true;
     } catch (error) {
       console.log(error);
-     
+      const errorPayload =
+        error instanceof AxiosError ? error.response.data : error;
+      console.error(errorPayload);
+      setLogoutLoading(false);
+      return false;
     }
   };
 
   if (redirectToHome) {
     return <Redirect to="/" />;
   }
-
+  if (logoutLoading) {
+    return <span>Logging you out...</span>;
+  }
   return (
     <Wrapper>
-        <h4>If you want to log out please press the button   </h4>
+      <h4>If you want to log out please press the button </h4>
 
-          <button className='btn' onClick={handleLogout}>  Logout</button>
-
-       
-            </Wrapper>
+      <button className="btn" onClick={handleLogout}>
+        {' '}
+        Logout
+      </button>
+    </Wrapper>
   );
 };
 
@@ -47,7 +52,7 @@ const Wrapper = styled.section`
   align-items: center;
   color: var(--clr-primary-1);
 
-  h4{
+  h4 {
     margin: 20px;
   }
   a {
@@ -59,7 +64,5 @@ const Wrapper = styled.section`
     color: var(--clr-primary-1);
   }
 `;
-
-
 
 export default Logout;
