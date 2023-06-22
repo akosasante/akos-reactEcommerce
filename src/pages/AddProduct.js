@@ -15,26 +15,39 @@ const AddProduct = () => {
   const [freeShipping, setFreeShipping] = useState(false);
   const [inventory, setInventory] = useState(15);
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData(); // instantiate a 'form-data' object in the browser to upload the image file
+    formData.set('image', image);
+    const imageResponse = await axios.post(
+      'https://ecommerce-6kwa.onrender.com/api/v1/products/uploadImage',
+      formData,
+      {
+        withCredentials: true,
+        headers: { 'Content-Type': 'multipart/form-data' },
+      }
+    );
+    console.dir(imageResponse);
 
     const product = {
       name,
       price,
       description,
-      image,
+      image: imageResponse.data.image,
       category,
       company,
   
       featured,
       freeShipping,
       inventory,
-  
     };
 
     try {
-      const response = await axios.post('https://ecommerce-6kwa.onrender.com/api/v1/products', product);
+      const response = await axios.post(
+        'https://ecommerce-6kwa.onrender.com/api/v1/products',
+        product,
+        { withCredentials: true }
+      );
       console.log('Product added successfully:', response.data);
       // Reset form fields
       setName(response.data.name);
@@ -47,7 +60,6 @@ const AddProduct = () => {
       setFeatured(response.data.featured);
       setFreeShipping(response.data.freeShipping);
       setInventory(response.data.inventory);
-
     } catch (error) {
       console.log('Error adding product:', error);
     }
@@ -59,27 +71,41 @@ const AddProduct = () => {
       <form onSubmit={handleSubmit}>
         <div>
           <label>Name</label>
-          <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
         </div>
         <div>
           <label>Price</label>
-          <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
+          <input
+            type="number"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+          />
         </div>
         <div>
           <label>Description</label>
-          <textarea value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          ></textarea>
         </div>
         <div>
           <label>Image</label>
-          <input type="text" value={image} onChange={(e) => setImage(e.target.value)} />
+          <input type='file' onChange={(e) => setImage(e.target.files[0])} />
         </div>
         <div>
           <label>Category</label>
-          <select value={category} onChange={(e) => setCategory(e.target.value)}>
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
             <option value="">Select Category</option>
             <option value="necklace">necklace</option>
-            <option value="earrings">earrings</option>
             <option value="ring">ring</option>
+            <option value="earrings">earrings</option>
           </select>
         </div>
         <div>
@@ -91,10 +117,14 @@ const AddProduct = () => {
             <option value="Cartier">Cartier</option>
           </select>
         </div>
-       
+        
         <div>
           <label>Featured</label>
-          <input type="checkbox" checked={featured} onChange={(e) => setFeatured(e.target.checked)} />
+          <input
+            type="checkbox"
+            checked={featured}
+            onChange={(e) => setFeatured(e.target.checked)}
+          />
         </div>
         <div>
           <label>Free Shipping</label>
@@ -106,7 +136,11 @@ const AddProduct = () => {
         </div>
         <div>
           <label>Inventory</label>
-          <input type="number" value={inventory} onChange={(e) => setInventory(e.target.value)} />
+          <input
+            type="number"
+            value={inventory}
+            onChange={(e) => setInventory(e.target.value)}
+          />
         </div>
 
         <button type="submit">Add Product</button>
