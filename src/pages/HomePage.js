@@ -35,7 +35,7 @@ const HomePage = () => {
   return (
     <main>
       <Hero />
-      <AddProduct />
+
       {isAdminLoggedIn && <AddProduct />}
       <FeaturedProducts />
       <Services />

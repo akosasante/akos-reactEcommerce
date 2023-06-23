@@ -17,6 +17,7 @@ const Logout = () => {
       });
       console.log(response);
       setLogoutLoading(false);
+      setRedirectToHome(true) //added
       return true;
     } catch (error) {
       console.log(error);
