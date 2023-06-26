@@ -22,11 +22,11 @@ const CartButtons = () => {
         .get(url, { withCredentials: true })
         .then((response) => {
           console.log(response);
-          setCurrentUser(response.data.user);
+          setCurrentUser(response?.data?.user);
         })
         .catch((error) => {
           const errorPayload =
-            error instanceof AxiosError ? error.response.data : error;
+            error instanceof AxiosError ? error?.response?.data : error;
           console.error(errorPayload);
         });
     }
