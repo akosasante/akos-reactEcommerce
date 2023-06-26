@@ -1,13 +1,16 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
+//working code
 const ProductImages = ({image}) => {
   console.log(image);
   //const [main, setMain] =useState(image) //for an array of images
   return <Wrapper>
-    <img src={image} alt="main image" className='main' />
+    <img src={image} alt="main " className='main' />
   </Wrapper>
 }
+
+
 
 //see 448 to set up an array of images
 
@@ -54,6 +57,6 @@ const Wrapper = styled.section`
       }
     }
   }
-`
+`;
 
-export default ProductImages
+export default ProductImages;

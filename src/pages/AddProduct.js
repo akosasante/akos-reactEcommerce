@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-//get error when adding a product- even if i login as admin
-//this component is seen by everyone but should be visible only to admin
+
 const AddProduct = () => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
@@ -14,6 +13,7 @@ const AddProduct = () => {
   const [featured, setFeatured] = useState(false);
   const [freeShipping, setFreeShipping] = useState(false);
   const [inventory, setInventory] = useState(15);
+  const [message, setMessage] = useState(''); //message 'product'added'
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,7 +36,7 @@ const AddProduct = () => {
       image: imageResponse.data.image,
       category,
       company,
-  
+
       featured,
       freeShipping,
       inventory,
@@ -49,17 +49,18 @@ const AddProduct = () => {
         { withCredentials: true }
       );
       console.log('Product added successfully:', response.data);
-      // Reset form fields
-      setName(response?.data?.name);
-      setPrice(response?.data?.price);
-      setDescription(response?.data?.description);
-      setImage(response?.data?.image);
-      setCategory(response?.data?.category);
-      setCompany(response?.data?.company);
+      setMessage(`Product added successfully`);
 
-      setFeatured(response?.data?.featured);
-      setFreeShipping(response?.data?.freeShipping);
-      setInventory(response?.data?.inventory);
+      // Reset form fields
+      setName('');
+      setPrice('');
+      setDescription('');
+      setImage('');
+      setCategory('');
+      setCompany('');
+      setFeatured(false);
+      setFreeShipping(false);
+      setInventory(15);
     } catch (error) {
       console.log('Error adding product:', error);
     }
@@ -94,7 +95,7 @@ const AddProduct = () => {
         </div>
         <div>
           <label>Image</label>
-          <input type='file' onChange={(e) => setImage(e.target.files[0])} />
+          <input type="file" onChange={(e) => setImage(e.target.files[0])} />
         </div>
         <div>
           <label>Category</label>
@@ -117,7 +118,7 @@ const AddProduct = () => {
             <option value="Cartier">Cartier</option>
           </select>
         </div>
-        
+
         <div>
           <label>Featured</label>
           <input
@@ -144,6 +145,11 @@ const AddProduct = () => {
         </div>
 
         <button type="submit">Add Product</button>
+        <p>
+          <b>
+            <em> {message}</em>
+          </b>
+        </p>
       </form>
     </div>
   );
