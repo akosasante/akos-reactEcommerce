@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState , useEffect } from 'react';
+import axios , { AxiosError } from 'axios';
 import styled from 'styled-components';
 import './styles.css';
 
@@ -40,7 +40,7 @@ const UpdatePassword = () => {
   const handleUpdate = async () => {
     setUpdateLoading(true);
 
-    const handleSubmitPassword = async (e) => {
+    const handleSubmit = async (e) => {
       e.preventDefault();
       if (!oldPassword || !newPassword) {
         setMessage('Please provide both values');
@@ -74,7 +74,7 @@ const UpdatePassword = () => {
       {currentUser && (
         <div>
           <h2>Update Password</h2>
-          <form onSubmit={handleSubmitPassword}>
+          <form onSubmit={handleSubmit}>
             <div>
               <label>Old Password</label>
               <input

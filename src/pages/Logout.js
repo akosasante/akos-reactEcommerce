@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import axios, { AxiosError } from 'axios';
 import styled from 'styled-components';
 import './styles.css';
-import UpdatePassword from './UpdatePassword,js';
+import UpdatePassword from './UpdatePassword.js';
 const rootUrl = 'https://ecommerce-6kwa.onrender.com';
 
 //LOGOUT
