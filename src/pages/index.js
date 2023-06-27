@@ -10,6 +10,8 @@ import Login from './Login';
 import Register from './Register';
 import Logout from './Logout';
 import AddProduct from './AddProduct';
+import Reviews from './Reviews';
+import Orders from './Orders';
 
 export {
   Home,
@@ -24,4 +26,6 @@ export {
   Register,
   Logout,
   AddProduct,
+  Orders,
+  Reviews,
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { BsStarFill, BsStarHalf, BsStar } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
 const Stars = ({ stars, reviews }) => {
   console.log(stars, reviews);
 
@@ -67,7 +68,10 @@ const Stars = ({ stars, reviews }) => {
         </span>
         {/*end of star*/}
       </div>
-      <p className="reviews"> ({reviews} customer reviews) </p>
+      <Link to="/reviews" className="reviews">
+      ({reviews} customer reviews)
+        </Link>
+
     </Wrapper>
   );
 };

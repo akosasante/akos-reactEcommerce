@@ -14,6 +14,8 @@ import {
   Login,
   Register,
   Logout,
+  Orders,
+  Reviews,
 } from './pages';
 
 function App() {
@@ -58,6 +60,14 @@ function App() {
         <Route exact path="/checkout">
           <Checkout />
         </Route>
+
+        <Route exact path="/orders">
+          <Orders />
+        </Route>
+        <Route exact path="/reviews">
+          <Reviews />
+        </Route>
+
         <Route path="*">
           <Error />
         </Route>
