@@ -64,8 +64,8 @@ function App() {
         <Route exact path="/orders">
           <Orders />
         </Route>
-        <Route exact path="/reviews">
-          <Reviews />
+        <Route exact path="/reviews" >
+          <Reviews   />
         </Route>
 
         <Route path="*">

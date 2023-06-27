@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom';
 import axios, { AxiosError } from 'axios';
 import UpdateProduct from './UpdateProduct';
 import DeleteProduct from './DeleteProduct';
+import Reviews from './Reviews';
 
 const rootUrl = 'https://ecommerce-6kwa.onrender.com';
 
@@ -97,7 +98,7 @@ const SingleProductPage = () => {
           <section className="content">
             <h2>{name}</h2>
 
-            <Stars stars={averageRating} reviews={numOfReviews} />
+            <Stars stars={averageRating} reviews={numOfReviews} id={id} />
 
             <h5 className="price">{formatPrice(price)}</h5>
             <p className="desc">{description}</p>
@@ -121,6 +122,7 @@ const SingleProductPage = () => {
             {inventory > 0 && <AddToCart product={product} />}
             {isAdminLoggedIn && <UpdateProduct productId={id}/>}
             {isAdminLoggedIn && <DeleteProduct productId={id}/>}
+            <Reviews productId ={id}/>
           </section>
 
         </div>
