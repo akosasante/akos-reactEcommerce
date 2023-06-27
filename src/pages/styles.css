@@ -53,4 +53,6 @@ input, textarea, select{
 }
  
   
- 
+ .left{
+  margin-left:80px
+ }
