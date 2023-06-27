@@ -53,4 +53,24 @@ input, textarea, select{
 }
  
   
- 
+ .left{
+  margin-left:80px
+ }
+
+ .underline{
+  border-bottom: #c79689 2px dashed;
+  margin-bottom: 20px;
+ }
+
+ .logoutbox{
+  display: flex;
+  flex-direction: column;
+  margin-left:60px;
+ }
+
+ .align{
+  text-align: center;
+ }
+.right{
+  margin-left:40px;
+}
