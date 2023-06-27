@@ -33,10 +33,10 @@ const Reviews = ({ productId }) => {
 
   // Get all reviews
   useEffect(() => {
-    getAllReviews();
-  }, []);
+    getAllReviews(productId);
+  }, [productId]);
 
-  const getAllReviews = async () => {
+  const getAllReviews = async ({productId}) => {
     try {
       const response = await axios.get(
         'https://ecommerce-6kwa.onrender.com/api/v1/reviews'
@@ -60,7 +60,7 @@ const Reviews = ({ productId }) => {
         product: productId,
         user: user,
       });
-      getAllReviews();
+      getAllReviews(productId);
     } catch (error) {
       console.error(error);
     }
@@ -78,7 +78,7 @@ const Reviews = ({ productId }) => {
         comment: '',
         product: productId,
       });
-      getAllReviews();
+      getAllReviews(productId);
     } catch (error) {
       console.error(error);
     }
@@ -89,7 +89,7 @@ const Reviews = ({ productId }) => {
       const response = await axios.delete(
         `https://ecommerce-6kwa.onrender.com/api/v1/reviews/${reviewId}`
       );
-      getAllReviews();
+      getAllReviews(productId);
     } catch (error) {
       console.error(error);
     }
