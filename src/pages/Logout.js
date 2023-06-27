@@ -106,9 +106,9 @@ const Logout = () => {
 
   return (
     <Wrapper>
-      <div className="left">
+      <div className="left underline ">
         {personLoggedIn && (
-          <div>
+          <div >
             <h3>Update User</h3>
             <form onSubmit={handleSubmit}>
               <div>
@@ -162,15 +162,16 @@ const Logout = () => {
           </div>
         )}
       </div>
-
+<hr/>
 <UpdatePassword />
-
-      <h4>If you want to log out please press the button </h4>
+<div className='logoutbox'>
+      <h3>To log out  press the button </h3>
 
       <button className="btn" onClick={handleLogout}>
         {' '}
         Logout
       </button>
+      </div>
     </Wrapper>
   );
 };
@@ -194,7 +195,7 @@ const Wrapper = styled.section`
     transition: var(--transition);
   }
   a:hover {
-    color: var(--clr-primary-1);
+    color: var(--clr-primary-6);
   }
 `;
 
