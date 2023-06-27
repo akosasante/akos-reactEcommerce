@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useProductsContext } from '../context/products_context';
 import { single_product_url as url } from '../utils/constants';
@@ -13,7 +13,40 @@ import {
 } from '../components';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import axios, { AxiosError } from 'axios';
+import UpdateProduct from './UpdateProduct';
+import DeleteProduct from './DeleteProduct';
+
+const rootUrl = 'https://ecommerce-6kwa.onrender.com';
+
+
 const SingleProductPage = () => {
+  const [currentUser, setCurrentUser] = useState(null);
+  useEffect(() => {
+    async function fetchData() {
+      const url = `${rootUrl}/api/v1/users/showMe`;
+      axios
+        .get(url, { withCredentials: true })
+        .then((response) => {
+          console.log(response);
+
+          // if (response && response.data && response.data.user) {
+          //   return response.data.user;
+          // }
+
+          setCurrentUser(response?.data?.user);
+        })
+        .catch((error) => {
+          const errorPayload =
+            error instanceof AxiosError ? error?.response?.data : error;
+          console.error(errorPayload);
+        });
+    }
+    fetchData();
+    // By using empty array [], for the "dependencies" argument of useEffect, it tells React to run this useEffect hook only *once*, the first time this component/context is rendered
+  }, []);
+  const isAdminLoggedIn = currentUser?.role === 'admin';
+
   const { id } = useParams();
 
   console.log(id);
@@ -86,6 +119,8 @@ const SingleProductPage = () => {
             
             <hr />
             {inventory > 0 && <AddToCart product={product} />}
+            {isAdminLoggedIn && <UpdateProduct productId={id}/>}
+            {isAdminLoggedIn && <DeleteProduct productId={id}/>}
           </section>
 
         </div>
