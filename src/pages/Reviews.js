@@ -39,7 +39,8 @@ const Reviews = ({ productId }) => {
   const getAllReviews = async ({productId}) => {
     try {
       const response = await axios.get(
-        'https://ecommerce-6kwa.onrender.com/api/v1/reviews'
+        'https://ecommerce-6kwa.onrender.com/api/v1/reviews',
+        { withCredentials: true }
       );
       setReviews(response.data.reviews);
     } catch (error) {
@@ -51,7 +52,8 @@ const Reviews = ({ productId }) => {
     try {
       const response = await axios.post(
         'https://ecommerce-6kwa.onrender.com/api/v1/reviews',
-        formData
+        formData,
+        { withCredentials: true }
       );
       setFormData({
         rating: '',
@@ -70,7 +72,8 @@ const Reviews = ({ productId }) => {
     try {
       const response = await axios.patch(
         `https://ecommerce-6kwa.onrender.com/api/v1/reviews/${reviewId}`,
-        formData
+        formData,
+        { withCredentials: true }
       );
       setFormData({
         rating: Number,
@@ -87,7 +90,8 @@ const Reviews = ({ productId }) => {
   const deleteReview = async (reviewId) => {
     try {
       const response = await axios.delete(
-        `https://ecommerce-6kwa.onrender.com/api/v1/reviews/${reviewId}`
+        `https://ecommerce-6kwa.onrender.com/api/v1/reviews/${reviewId}`,
+        { withCredentials: true }
       );
       getAllReviews(productId);
     } catch (error) {
