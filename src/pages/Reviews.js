@@ -21,7 +21,7 @@ const Reviews = ({ productId }) => {
 
   const user = currentUser;
   //console.log(user.userId); //user id
-
+  const [message, setMessage] = useState('');
   const [reviews, setReviews] = useState([]);
   const [formData, setFormData] = useState({
     rating: '',
@@ -49,6 +49,7 @@ const Reviews = ({ productId }) => {
   };
 
   const createReview = async (productId, user) => {
+ 
     try {
       const response = await axios.post(
         'https://ecommerce-6kwa.onrender.com/api/v1/reviews',
@@ -62,9 +63,11 @@ const Reviews = ({ productId }) => {
         product: productId,
         user: user,
       });
+      setMessage('Review created successfully');
       getAllReviews(productId);
     } catch (error) {
       console.error(error);
+      setMessage('Check all the fields');
     }
   };
 
@@ -81,6 +84,7 @@ const Reviews = ({ productId }) => {
         comment: '',
         product: productId,
       });
+      setMessage('Review updated successfully');
       getAllReviews(productId);
     } catch (error) {
       console.error(error);
@@ -93,6 +97,7 @@ const Reviews = ({ productId }) => {
         `https://ecommerce-6kwa.onrender.com/api/v1/reviews/${reviewId}`,
         { withCredentials: true }
       );
+      setMessage('Review deleted successfully');
       getAllReviews(productId);
     } catch (error) {
       console.error(error);
@@ -108,9 +113,11 @@ const Reviews = ({ productId }) => {
 
   return (
     <div>
-      <h2>Reviews</h2>
+     
       <div>
+      <p style={{ color: 'red', textAlign: 'center' }}><b><em>{message}</em></b></p>
         <h3>Create Review</h3>
+        <p> <em>Max. one review per product</em></p>
         <label htmlFor="rating">Rating:</label>
         <input
           type="number"
@@ -148,9 +155,12 @@ const Reviews = ({ productId }) => {
             <h3>{review.title}</h3>
             <p>Rating: {review.rating}</p>
             <p>Comment: {review.comment}</p>
+            
             <button onClick={() => updateReview(review._id)}>Update</button>
             <button onClick={() => deleteReview(review._id)}>Delete</button>
-          </div>
+         
+         
+         </div>
         ))}
       </div>
     </div>
