@@ -20,7 +20,22 @@ const UpdateProduct = ({ productId }) => {
           `https://ecommerce-6kwa.onrender.com/api/v1/products/${productId}`,
           { withCredentials: true }
         );
-        const product = response.data;
+
+        // The product endpoint returns an object nested under the field 'product' eg: { "product" : { name: blah, price: blah } } . So we need to add `.product` here after response.data. 
+        //An alternative approach would be to use object destructuring and do { product } = response.data
+        const product = response.data.product;
+
+      setName(product.name);
+      setPrice(product.price);
+      setDescription(product.description);
+      setCategory(product.category);
+      setCompany(product.company);
+      setFeatured(product.featured);
+      setFreeShipping(product.freeShipping);
+      setInventory(product.inventory);
+
+
+
       } catch (error) {
         console.log('Error fetching product:', error);
       }
@@ -42,6 +57,8 @@ const UpdateProduct = ({ productId }) => {
       freeShipping,
       inventory,
     };
+
+
 
     try {
       const response = await axios.patch(

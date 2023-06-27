@@ -5,17 +5,17 @@
     padding: 5x;
     margin-top: 35px;
     font-weight: bold;
-    color: rgb(170, 66, 17);
+    color: rgb(22, 14, 10);
 }
 
 h3{
-    color:rgb(109, 44, 18);
+    color:rgb(49, 31, 24);
 }
 .crudbtn {
     margin-top: 25px;
     cursor: pointer;
     font-weight: 500;
-  
+    font-family: 'Segoe UI';
     transition: all .2s;
     padding: 5px 16px;
     border-radius: 80px;
@@ -49,6 +49,7 @@ input, textarea, select{
     border-radius:12px;
     border-color: #fabaaaa9;
     padding: 8px;
+    font-family: 'Segoe UI';
 }
  
   

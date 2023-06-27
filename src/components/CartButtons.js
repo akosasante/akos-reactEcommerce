@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useProductsContext } from '../context/products_context';
 import { useCartContext } from '../context/cart_context';
 import axios, { AxiosError } from 'axios';
+import './styleicon.css';
 
 const rootUrl = 'https://ecommerce-6kwa.onrender.com';
 
@@ -46,15 +47,15 @@ const CartButtons = () => {
 
 {currentUser && (
     <Link to='/logout' className='cart-btn'>
-    <span>{currentUser?.name}</span>
-    <span>
+    <span className='welcome'> Welcome {currentUser?.name} </span>
+    <span className='icon'>
       <FaUserMinus />
     </span>
   </Link>
 )}
 
       <Link to='/cart' className='cart-btn' onClick={closeSidebar}>
-        Cart
+        
         <span className='cart-container'>
           <FaShoppingCart />
           <span className='cart-value'>{total_items}</span>
