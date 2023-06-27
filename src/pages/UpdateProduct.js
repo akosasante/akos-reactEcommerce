@@ -20,14 +20,6 @@ const UpdateProduct = ({ productId }) => {
           { withCredentials: true }
         );
         const product = response.data;
-        setName(product.name);
-        setPrice(product.price);
-        setDescription(product.description);
-        setCategory(product.category);
-        setCompany(product.company);
-        setFeatured(product.featured);
-        setFreeShipping(product.freeShipping);
-        setInventory(product.inventory);
       } catch (error) {
         console.log('Error fetching product:', error);
       }

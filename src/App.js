@@ -51,7 +51,7 @@ function App() {
 
         <Route
           exact
-          path="/products/response.data"
+          path="/products/:id"
           children={<SingleProduct />}
         />
         {/*  children prop provides ability to render dynamic components based on the matched route and provides access to any route parameters (such as id) within the <SingleProduct/> component */}
