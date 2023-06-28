@@ -8,6 +8,7 @@ const Orders = () => {
 
   //fetch current user
   const [currentUser, setCurrentUser] = useState(null);
+  const [message, setMessage] = useState(''); 
   useEffect(() => {
     async function fetchData() {
       const url = `${rootUrl}/api/v1/users/showMe`;
@@ -60,13 +61,10 @@ const user= currentUser;
               },
             }
           );
-      
-          if (response.status === 200) {
-            const data = response.data;
-           // setOrder(data.order);
-          } else {
-            console.error('Error:', response.status);
-          }
+          console.log('Order added successfully:', response.data);
+          setMessage(`Order added successfully`);
+          setOrder(response.data.order);
+          
         } catch (error) {
           console.error('Error:', error.message);
         }
@@ -122,6 +120,7 @@ const user= currentUser;
             ></path>
           </svg>
         </button>
+        <p>{message}</p>
       </div>
 
       {order && (
