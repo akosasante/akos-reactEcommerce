@@ -36,20 +36,23 @@ const Reviews = ({ productId }) => {
     getAllReviews(productId);
   }, [productId]);
 
-  const getAllReviews = async ({productId}) => {
+  const getAllReviews = async ({ productId }) => {
     try {
       const response = await axios.get(
         'https://ecommerce-6kwa.onrender.com/api/v1/reviews',
         { withCredentials: true }
       );
-      setReviews(response.data.reviews);
+      const allReviews = response.data.reviews;
+      const filteredReviews = allReviews.filter((review)=> review.product._id === productId)
+      console.log(filteredReviews);
+      
+      setReviews(filteredReviews);
     } catch (error) {
       console.error(error);
     }
   };
 
   const createReview = async (productId, user) => {
- 
     try {
       const response = await axios.post(
         'https://ecommerce-6kwa.onrender.com/api/v1/reviews',
@@ -63,6 +66,7 @@ const Reviews = ({ productId }) => {
         product: productId,
         user: user,
       });
+   
       setMessage('Review created successfully');
       getAllReviews(productId);
     } catch (error) {
@@ -83,6 +87,7 @@ const Reviews = ({ productId }) => {
         title: '',
         comment: '',
         product: productId,
+        user: user,
       });
       setMessage('Review updated successfully');
       getAllReviews(productId);
@@ -113,11 +118,16 @@ const Reviews = ({ productId }) => {
 
   return (
     <div>
-     
       <div>
-      <p style={{ color: 'red', textAlign: 'center' }}><b><em>{message}</em></b></p>
+        <p style={{ color: 'red', textAlign: 'center' }}>
+          <b>
+            <em>{message}</em>
+          </b>
+        </p>
         <h3>Create Review</h3>
-        <p> <em>Max. one review per product</em></p>
+        <p>
+          <em>Max. one review per product</em>
+        </p>
         <label htmlFor="rating">Rating:</label>
         <input
           type="number"
@@ -155,12 +165,15 @@ const Reviews = ({ productId }) => {
             <h3>{review.title}</h3>
             <p>Rating: {review.rating}</p>
             <p>Comment: {review.comment}</p>
-            
-            <button onClick={() => updateReview(review._id)}>Update</button>
-            <button onClick={() => deleteReview(review._id)}>Delete</button>
-         
-         
-         </div>
+            {user && (
+              <>
+                <button onClick={() => updateReview(review._id, productId)}>
+                  Update
+                </button>
+                <button onClick={() => deleteReview(review._id)}>Delete</button>
+              </>
+            )}
+          </div>
         ))}
       </div>
     </div>
