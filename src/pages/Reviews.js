@@ -128,34 +128,39 @@ const Reviews = ({ productId }) => {
         <p>
           <em>Max. one review per product</em>
         </p>
-        <label htmlFor="rating">Rating:</label>
-        <input
-          type="number"
-          name="rating"
-          value={formData.rating}
-          onChange={handleInputChange}
-        />
-        <label htmlFor="title">Title:</label>
-        <input
-          type="text"
-          name="title"
-          value={formData.title}
-          onChange={handleInputChange}
-        />
-        <label htmlFor="comment">Comment:</label>
-        <input
-          type="text"
-          name="comment"
-          value={formData.comment}
-          onChange={handleInputChange}
-        />
         <label htmlFor="product">Product:</label>
+        <div>
         <input
           type="text"
           name="product"
           value={formData.product}
           onChange={handleInputChange}
-        />
+        /></div>
+        <label htmlFor="rating">Rating:</label>
+        <div>
+        <input
+          type="number"
+          name="rating"
+          value={formData.rating}
+          onChange={handleInputChange}
+        /></div>
+        <label htmlFor="title">Title:</label>
+        <div>
+        <input
+          type="text"
+          name="title"
+          value={formData.title}
+          onChange={handleInputChange}
+        /></div>
+        <label htmlFor="comment">Comment:</label>
+        <div>
+        <input
+          type="text"
+          name="comment"
+          value={formData.comment}
+          onChange={handleInputChange}
+        /></div>
+        
         <button onClick={createReview}>Create</button>
       </div>
       <div>

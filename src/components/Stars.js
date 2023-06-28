@@ -69,7 +69,7 @@ const Stars = ({ stars, reviews }) => {
         </span>
         {/*end of star*/}
       </div>
-      <p className="reviews"> (customer rating: {reviews}
+      <p className="reviews"> ( {reviews} review(s)
       
       ) </p>
     </Wrapper>
