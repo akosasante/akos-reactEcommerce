@@ -27,8 +27,7 @@ const Reviews = ({ productId }) => {
     rating: '',
     title: '',
     comment: '',
-    product: productId,
-    user,
+    product: productId
   });
 
   // Get all reviews
@@ -36,7 +35,7 @@ const Reviews = ({ productId }) => {
     getAllReviews(productId);
   }, [productId]);
 
-  const getAllReviews = async ({ productId }) => {
+  const getAllReviews = async (productId) => {
     try {
       const response = await axios.get(
         'https://ecommerce-6kwa.onrender.com/api/v1/reviews',
@@ -44,17 +43,17 @@ const Reviews = ({ productId }) => {
       );
       const allReviews = response.data.reviews;
       const filteredReviews = allReviews.filter((review)=> review?.product?._id === productId)
-         
+
       setReviews(filteredReviews);
-      console.log('this is the result', filteredReviews);  
+      console.log('this is the result', filteredReviews);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const createReview = async (productId, user) => {
+  const createReview = async (productId) => {
     try {
-      const response = await axios.post(
+      await axios.post(
         'https://ecommerce-6kwa.onrender.com/api/v1/reviews',
         formData,
         { withCredentials: true }
@@ -63,21 +62,24 @@ const Reviews = ({ productId }) => {
         rating: '',
         title: '',
         comment: '',
-        product: productId,
-        user: user,
+        product: productId
       });
-   
+
       setMessage('Review created successfully');
-      getAllReviews(productId);
+      await getAllReviews(productId);
     } catch (error) {
       console.error(error);
-      setMessage('Check all the fields');
+      if (error?.response?.status >= 400 && error?.response?.status < 500) {
+        setMessage(error.response.data.msg)
+      } else {
+        setMessage('Check all the fields');
+      }
     }
   };
 
   const updateReview = async (reviewId, productId) => {
     try {
-      const response = await axios.patch(
+      await axios.patch(
         `https://ecommerce-6kwa.onrender.com/api/v1/reviews/${reviewId}`,
         formData,
         { withCredentials: true }
@@ -86,19 +88,23 @@ const Reviews = ({ productId }) => {
         rating: Number,
         title: '',
         comment: '',
-        product: productId,
-        user: user,
+        product: productId
       });
       setMessage('Review updated successfully');
       getAllReviews(productId);
     } catch (error) {
       console.error(error);
+      if (error?.response?.status >= 400 && error?.response?.status < 500) {
+        setMessage(error.response.data.msg)
+      } else {
+        setMessage('Could not update review - Check all the fields');
+      }
     }
   };
 
   const deleteReview = async (reviewId) => {
     try {
-      const response = await axios.delete(
+      await axios.delete(
         `https://ecommerce-6kwa.onrender.com/api/v1/reviews/${reviewId}`,
         { withCredentials: true }
       );
@@ -141,6 +147,8 @@ const Reviews = ({ productId }) => {
         <input
           type="number"
           name="rating"
+          min={1}
+          max={5}
           value={formData.rating}
           onChange={handleInputChange}
         /></div>
@@ -160,8 +168,8 @@ const Reviews = ({ productId }) => {
           value={formData.comment}
           onChange={handleInputChange}
         /></div>
-        
-        <button onClick={createReview}>Create</button>
+
+        <button onClick={() => createReview(productId)}>Create</button>
       </div>
       <div>
         <h3> Reviews about this product</h3>
@@ -170,7 +178,7 @@ const Reviews = ({ productId }) => {
             <h3>{review.title}</h3>
             <p>Rating: {review.rating}</p>
             <p>Comment: {review.comment}</p>
-            {user && (
+            {user && (review.user === user.userId) && (
               <>
                 <button onClick={() => updateReview(review._id, productId)}>
                   Update
