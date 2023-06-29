@@ -1,13 +1,14 @@
-import React from 'react'
-import styled from 'styled-components'
-import { useCartContext } from '../context/cart_context'
+import React from 'react';
+import styled from 'styled-components';
+import { useCartContext } from '../context/cart_context';
 
-import { formatPrice } from '../utils/helpers'
-import { Link } from 'react-router-dom'
+import { formatPrice } from '../utils/helpers';
+import { Link } from 'react-router-dom';
 
 const CartTotals = () => {
-  const { total_amount, shipping_fee } = useCartContext()
-
+  const { total_amount, shipping_fee } = useCartContext();
+  // TODO: should tax maybe be a percentage of the subtotal? I suppose this may be different in different regions of the world.
+  const tax = 10;
 
   return (
     <Wrapper>
@@ -19,21 +20,22 @@ const CartTotals = () => {
           <p>
             shipping fee :<span>{formatPrice(shipping_fee)}</span>
           </p>
+          <p>
+            tax:<span>${tax}</span>
+          </p>
           <hr />
           <h4>
-            order total :<span>{formatPrice(total_amount + shipping_fee)}</span>
+            order total :
+            <span>{formatPrice(total_amount + shipping_fee + tax)}</span>
           </h4>
         </article>
-        <Link to='/checkout' className='btn'>
-            proceed to checkout
-          </Link>
-          
-
-
+        <Link to="/orders" className="btn">
+          create order
+        </Link>
       </div>
     </Wrapper>
-  )
-}
+  );
+};
 
 const Wrapper = styled.section`
   margin-top: 3rem;
@@ -65,6 +67,6 @@ const Wrapper = styled.section`
     text-align: center;
     font-weight: 700;
   }
-`
+`;
 
-export default CartTotals
+export default CartTotals;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Navbar, Sidebar, Footer } from './components';
 
@@ -9,11 +9,11 @@ import {
   About,
   Cart,
   Error,
-  Checkout,
-  PrivateRoute,
   Login,
   Register,
   Logout,
+  Orders,
+  Reviews,
 } from './pages';
 
 function App() {
@@ -49,15 +49,16 @@ function App() {
           <Products />
         </Route>
 
-        <Route
-          exact
-          path="/products/:id"
-          children={<SingleProduct />}
-        />
+        <Route exact path="/products/:id" children={<SingleProduct />} />
         {/*  children prop provides ability to render dynamic components based on the matched route and provides access to any route parameters (such as id) within the <SingleProduct/> component */}
-        <Route exact path="/checkout">
-          <Checkout />
+
+        <Route exact path="/orders">
+          <Orders />
         </Route>
+        <Route exact path="/reviews">
+          <Reviews />
+        </Route>
+
         <Route path="*">
           <Error />
         </Route>
