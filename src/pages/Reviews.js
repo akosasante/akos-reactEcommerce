@@ -43,10 +43,10 @@ const Reviews = ({ productId }) => {
         { withCredentials: true }
       );
       const allReviews = response.data.reviews;
-      const filteredReviews = allReviews.filter((review)=> review.product._id === productId)
-      console.log(filteredReviews);
-      
+      const filteredReviews = allReviews.filter((review)=> review?.product?._id === productId)
+         
       setReviews(filteredReviews);
+      console.log('this is the result', filteredReviews);  
     } catch (error) {
       console.error(error);
     }
@@ -164,7 +164,7 @@ const Reviews = ({ productId }) => {
         <button onClick={createReview}>Create</button>
       </div>
       <div>
-        <h3>All Reviews</h3>
+        <h3> Reviews about this product</h3>
         {reviews.map((review) => (
           <div key={review._id}>
             <h3>{review.title}</h3>
