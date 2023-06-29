@@ -21,6 +21,7 @@ const Reviews = ({ productId }) => {
 
   const user = currentUser;
   //console.log(user.userId); //user id
+
   const [message, setMessage] = useState('');
   const [reviews, setReviews] = useState([]);
   const [formData, setFormData] = useState({
@@ -62,7 +63,7 @@ const Reviews = ({ productId }) => {
         rating: '',
         title: '',
         comment: '',
-        product: productId
+        product: productId,
       });
 
       setMessage('Review created successfully');
@@ -88,7 +89,7 @@ const Reviews = ({ productId }) => {
         rating: Number,
         title: '',
         comment: '',
-        product: productId
+        product: productId,
       });
       setMessage('Review updated successfully');
       getAllReviews(productId);
@@ -169,21 +170,26 @@ const Reviews = ({ productId }) => {
           onChange={handleInputChange}
         /></div>
 
-        <button onClick={() => createReview(productId)}>Create</button>
+        <button className='create' onClick={() => createReview(productId)}>Create review</button>
       </div>
       <div>
-        <h3> Reviews about this product</h3>
+        <h5> Read all the reviews about this product:</h5>
         {reviews.map((review) => (
           <div key={review._id}>
-            <h3>{review.title}</h3>
+            <h6>{review.title}</h6>
             <p>Rating: {review.rating}</p>
             <p>Comment: {review.comment}</p>
+
             {user && (review.user === user.userId) && (
               <>
-                <button onClick={() => updateReview(review._id, productId)}>
-                  Update
+                <button className='change' onClick={() => updateReview(review._id, productId)}>
+                  Update my review
                 </button>
-                <button onClick={() => deleteReview(review._id)}>Delete</button>
+                <div>
+                 <button className='delete' onClick={() => deleteReview(review._id)}>Delete my review</button> 
+                </div>
+                
+                
               </>
             )}
           </div>
