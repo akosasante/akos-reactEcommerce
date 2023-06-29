@@ -8,7 +8,8 @@ import { Link } from 'react-router-dom';
 const CartTotals = () => {
   const { total_amount, shipping_fee } = useCartContext();
   // TODO: should tax maybe be a percentage of the subtotal? I suppose this may be different in different regions of the world.
-  const tax = 10;
+  const taxRate = 0.15; // 15% tax rate
+  const tax = total_amount * taxRate;
 
   return (
     <Wrapper>
@@ -21,7 +22,7 @@ const CartTotals = () => {
             shipping fee :<span>{formatPrice(shipping_fee)}</span>
           </p>
           <p>
-            tax:<span>${tax}</span>
+            tax (15%):<span>${tax}</span>
           </p>
           <hr />
           <h4>
