@@ -122,9 +122,9 @@ const SingleProductPage = () => {
             {inventory > 0 && <AddToCart product={product} />}
             {isAdminLoggedIn && <UpdateProduct productId={id}/>}
             {isAdminLoggedIn && <DeleteProduct productId={id}/>}
-            <Reviews productId ={id}/>
+            
           </section>
-
+<Reviews productId ={id}/>
         </div>
 
       </div>

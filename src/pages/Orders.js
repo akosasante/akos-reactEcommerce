@@ -110,12 +110,12 @@ const Orders = () => {
             </svg>
           </button>
         )}
-        <p>{message}</p>
+        <p style={{ color: 'red' , textTransform: 'uppercase' }}>{message}</p>
       </div>
 
       {order && (
-        <div>
-          <h3>Order Confirmation:</h3>
+        <div className='space'>
+          <h4>Order Confirmation:</h4>
           <p>Order ID: {order._id}</p>
           <p>Status: {order.status}</p>
         </div>

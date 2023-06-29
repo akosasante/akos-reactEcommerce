@@ -25,7 +25,7 @@ const Reviews = ({ productId }) => {
   const [message, setMessage] = useState('');
   const [reviews, setReviews] = useState([]);
   const [formData, setFormData] = useState({
-    rating: '',
+    rating: Number,
     title: '',
     comment: '',
     product: productId
@@ -60,7 +60,7 @@ const Reviews = ({ productId }) => {
         { withCredentials: true }
       );
       setFormData({
-        rating: '',
+        rating:Number,
         title: '',
         comment: '',
         product: productId,
@@ -179,7 +179,7 @@ const Reviews = ({ productId }) => {
             <h6>{review.title}</h6>
             <p>Rating: {review.rating}</p>
             <p>Comment: {review.comment}</p>
-
+<hr />
             {user && (review.user === user.userId) && (
               <>
                 <button className='change' onClick={() => updateReview(review._id, productId)}>
