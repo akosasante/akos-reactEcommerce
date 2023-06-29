@@ -9,8 +9,8 @@ const CartTotals = () => {
   const { total_amount, shipping_fee } = useCartContext();
   // TODO: should tax maybe be a percentage of the subtotal? I suppose this may be different in different regions of the world.
   const taxRate = 0.15; // 15% tax rate
-  const tax = total_amount * taxRate;
-
+  const tax = (total_amount * taxRate).toFixed(2);;
+  const roundedTax = parseFloat(tax);
   return (
     <Wrapper>
       <div>
@@ -22,12 +22,12 @@ const CartTotals = () => {
             shipping fee :<span>{formatPrice(shipping_fee)}</span>
           </p>
           <p>
-            tax (15%):<span>${tax}</span>
+            tax (15%):<span>${roundedTax}</span>
           </p>
           <hr />
           <h4>
             order total :
-            <span>{formatPrice(total_amount + shipping_fee + tax)}</span>
+            <span>{formatPrice(total_amount + shipping_fee + roundedTax)}</span>
           </h4>
         </article>
         <Link to="/orders" className="btn">
