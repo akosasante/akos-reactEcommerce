@@ -3,27 +3,29 @@ import { useCartContext } from '../context/cart_context';
 import './styles.css';
 import axios  from 'axios';
 import { useUserContext } from "../context/user_context";
+import { formatPrice } from '../utils/helpers';
 
 const Orders = () => {
   const { currentUser } = useUserContext();
   const [message, setMessage] = useState('');
-  const [hasOrdered, setHasOrdered] = useState(false);
 
   const user = currentUser;
 
-  const { cart, total_amount, shipping_fee } = useCartContext();
-  const [tax, setTax] = useState(10);
+  const { cart, total_amount, shipping_fee, taxRate } = useCartContext();
+  const tax = (total_amount * taxRate).toFixed(2);
+  const roundedTax = parseFloat(tax);
   const [order, setOrder] = useState(null);
 
+  // Possibly you'd want to use the `clearCart` function from the cart context to clear the cart after a successful order?
   const handleCheckout = async () => {
     try {
       const response = await axios.post(
         'https://ecommerce-6kwa.onrender.com/api/v1/orders',
         {
-          tax,
+          tax: roundedTax,
           shippingFee: shipping_fee,
           subtotal: total_amount,
-          total: total_amount + shipping_fee + tax,
+          total: total_amount + shipping_fee + roundedTax,
           items: cart,
           user: user.userId,
           clientSecret: 'randomString',
@@ -39,7 +41,6 @@ const Orders = () => {
       setOrder(response.data.order);
       console.log('Order added successfully:', response.data);
       setMessage(`Order added successfully`);
-      setHasOrdered(true);
     } catch (error) {
       console.error('Error:', error.message);
     }
@@ -64,13 +65,13 @@ const Orders = () => {
 
       <div className="space">
         <h4>Order Summary:</h4>
-        <p>Tax: ${tax}</p>
-        <p>Shipping Fee: ${shipping_fee}</p>
-        <p>Total: ${total_amount + shipping_fee + tax}</p>
+        <p>Tax: {formatPrice(tax)}</p>
+        <p>Shipping Fee: {formatPrice(shipping_fee)}</p>
+        <p>Total: {formatPrice(total_amount + shipping_fee + roundedTax)}</p>
       </div>
 
       <div>
-        {!hasOrdered && (
+        {!order && (
           <button type="submit" className="crudbtn" onClick={handleCheckout}>
             <span>Place Order</span>
             <svg
