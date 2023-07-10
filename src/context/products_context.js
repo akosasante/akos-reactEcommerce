@@ -63,6 +63,26 @@ export const ProductsProvider = ({ children }) => {
     }
   }
 
+  const addProduct = async (product) => {
+    try {
+      const response = await axios.post(
+        url,
+        product,
+        { withCredentials: true }
+      );
+      const responseProduct = response?.data?.product
+
+      console.log('Product added successfully:', responseProduct);
+
+      // reload products:
+      fetchProducts(url);
+
+      return responseProduct
+    } catch (error) {
+      console.log('Error adding product:', error);
+    }
+  }
+
   useEffect(() => {
     fetchProducts(url)
   }, [])
@@ -74,6 +94,7 @@ export const ProductsProvider = ({ children }) => {
         openSidebar,
         closeSidebar,
         fetchSingleProduct,
+        addProduct
       }}
     >
       {children}

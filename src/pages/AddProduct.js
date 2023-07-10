@@ -1,68 +1,54 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './styles.css';
+import { useProductsContext } from "../context/products_context";
+
+const emptyProduct = {
+  name: '',
+  price: '',
+  description: '',
+  image: '',
+  imageFile: undefined,
+  category: '',
+  company: '',
+  featured: false,
+  freeShipping: false,
+  inventory: 15
+}
 
 const AddProduct = () => {
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
-  const [description, setDescription] = useState('');
-  const [image, setImage] = useState('');
-  const [category, setCategory] = useState('');
-  const [company, setCompany] = useState('');
-
-  const [featured, setFeatured] = useState(false);
-  const [freeShipping, setFreeShipping] = useState(false);
-  const [inventory, setInventory] = useState(15);
+  const { addProduct } = useProductsContext();
+  const [productData, setProductData] = useState(emptyProduct);
   const [message, setMessage] = useState(''); //message 'product'added'
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(); // instantiate a 'form-data' object in the browser to upload the image file
-    formData.set('image', image);
-    const imageResponse = await axios.post(
-      'https://ecommerce-6kwa.onrender.com/api/v1/products/uploadImage',
-      formData,
-      {
-        withCredentials: true,
-        headers: { 'Content-Type': 'multipart/form-data' },
-      }
-    );
-    console.dir(imageResponse);
-
-    const product = {
-      name,
-      price,
-      description,
-      image: imageResponse.data.image,
-      category,
-      company,
-
-      featured,
-      freeShipping,
-      inventory,
-    };
-
     try {
-      const response = await axios.post(
-        'https://ecommerce-6kwa.onrender.com/api/v1/products',
-        product,
-        { withCredentials: true }
+      e.preventDefault();
+      setMessage('');
+      const formData = new FormData(); // instantiate a 'form-data' object in the browser to upload the image file
+      formData.set('image', productData.imageFile);
+      const imageResponse = await axios.post(
+        'https://ecommerce-6kwa.onrender.com/api/v1/products/uploadImage',
+        formData,
+        {
+          withCredentials: true,
+          headers: { 'Content-Type': 'multipart/form-data' },
+        }
       );
-      console.log('Product added successfully:', response.data);
-      setMessage(`Product added successfully`);
+      console.dir(imageResponse);
 
-      // Reset form fields
-      setName('');
-      setPrice('');
-      setDescription('');
-      setImage('');
-      setCategory('');
-      setCompany('');
-      setFeatured(false);
-      setFreeShipping(false);
-      setInventory(15);
-    } catch (error) {
-      console.log('Error adding product:', error);
+      const product = { ...productData, image: imageResponse.data.image }
+      const addedProduct = await addProduct(product);
+
+      if (addedProduct) {
+        setMessage(`Product added successfully`);
+        // Reset form fields
+        setProductData(emptyProduct)
+        // Reset image file input
+        e.target.elements["imageInput"].value = ''
+      }
+    } catch (e) {
+      setMessage(e.message)
     }
   };
 
@@ -77,8 +63,8 @@ const AddProduct = () => {
               <input
                 className="inputbox"
                 type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={productData.name}
+                onChange={(e) => setProductData({ ...productData, name: e.target.value })}
               />
             </div>
           </div>
@@ -87,8 +73,8 @@ const AddProduct = () => {
             <div>
               <input
                 type="number"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
+                value={productData.price}
+                onChange={(e) => setProductData({ ...productData, price: e.target.value })}
               />
             </div>
           </div>
@@ -96,20 +82,20 @@ const AddProduct = () => {
             <label>Description </label>
             <div>
               <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                value={productData.description}
+                onChange={(e) => setProductData({ ...productData, description: e.target.value })}
               ></textarea>
             </div>
           </div>
           <div>
             <label>Image </label>
-            <input type="file" onChange={(e) => setImage(e.target.files[0])} />
+            <input name="imageInput" type="file" onChange={(e) => setProductData({ ...productData, imageFile: e.target.files[0] })} />
           </div>
           <div>
             <label>Category </label>
             <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              value={productData.category}
+              onChange={(e) => setProductData({ ...productData, category: e.target.value })}
             >
               <option value="">Select Category</option>
               <option value="necklace">necklace</option>
@@ -120,8 +106,8 @@ const AddProduct = () => {
           <div>
             <label>Company </label>
             <select
-              value={company}
-              onChange={(e) => setCompany(e.target.value)}
+              value={productData.company}
+              onChange={(e) => setProductData({ ...productData, company: e.target.value })}
             >
               <option value="">Select Company</option>
               <option value="Suarez">Suarez</option>
@@ -134,16 +120,16 @@ const AddProduct = () => {
             <label>Featured </label>
             <input
               type="checkbox"
-              checked={featured}
-              onChange={(e) => setFeatured(e.target.checked)}
+              checked={productData.featured}
+              onChange={(e) => setProductData({ ...productData, featured: e.target.checked })}
             />
           </div>
           <div>
             <label>Free Shipping </label>
             <input
               type="checkbox"
-              checked={freeShipping}
-              onChange={(e) => setFreeShipping(e.target.checked)}
+              checked={productData.freeShipping}
+              onChange={(e) => setProductData({ ...productData, freeShipping: e.target.checked })}
             />
           </div>
           <div>
@@ -151,8 +137,8 @@ const AddProduct = () => {
             <div>
               <input
                 type="number"
-                value={inventory}
-                onChange={(e) => setInventory(e.target.value)}
+                value={productData.inventory}
+                onChange={(e) => setProductData({ ...productData, inventory: e.target.value })}
               />
             </div>
           </div>
