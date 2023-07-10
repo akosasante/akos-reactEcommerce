@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './styles.css';
 
+// should use the onDelete to do something on `SingleProductPage` when the delete is successful
+// eg: redirect back to product list page, and maybe refetch the products so we no longer see the deleted product.
+// or if you don't want to redirect them away, at least hiding the "add to cart" and "update product" inputs/buttons once a produc thas been deleted
 const DeleteProduct = ({ productId, onDelete }) => {
   const [message, setMessage] = useState('');
 
