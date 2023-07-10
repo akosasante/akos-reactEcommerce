@@ -97,7 +97,7 @@ const SingleProductPage = () => {
             
           </section>
           <div>
-            {isAdminLoggedIn && <UpdateProduct productId={id}/>}
+            {isAdminLoggedIn && <UpdateProduct product={product} onUpdate={() => fetchSingleProduct(url, id)}/>}
          
             {isAdminLoggedIn && <DeleteProduct productId={id}/>}
             </div>
