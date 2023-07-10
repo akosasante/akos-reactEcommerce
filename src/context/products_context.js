@@ -83,6 +83,13 @@ export const ProductsProvider = ({ children }) => {
     }
   }
 
+  const ensureProductsLoaded = async () => {
+    if (!state.products?.length) {
+      // If products is not defined, or if it's an empty list, then re-fetch the products from the backend
+      await fetchProducts();
+    }
+  }
+
   useEffect(() => {
     fetchProducts(url)
   }, [])
@@ -94,7 +101,8 @@ export const ProductsProvider = ({ children }) => {
         openSidebar,
         closeSidebar,
         fetchSingleProduct,
-        addProduct
+        addProduct,
+        ensureProductsLoaded
       }}
     >
       {children}
