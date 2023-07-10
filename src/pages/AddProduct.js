@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import './styles.css';
 import { useProductsContext } from "../context/products_context";
 import { ReactComponent as ArrowIcon } from '../assets/icons/arrow-with-circle.svg'
+import { productApi } from '../api';
 
 const emptyProduct = {
   name: '',
@@ -26,19 +26,11 @@ const AddProduct = () => {
     try {
       e.preventDefault();
       setMessage('');
-      const formData = new FormData(); // instantiate a 'form-data' object in the browser to upload the image file
-      formData.set('image', productData.imageFile);
-      const imageResponse = await axios.post(
-        'https://ecommerce-6kwa.onrender.com/api/v1/products/uploadImage',
-        formData,
-        {
-          withCredentials: true,
-          headers: { 'Content-Type': 'multipart/form-data' },
-        }
-      );
-      console.dir(imageResponse);
+      
+      const imageResponse = await productApi.uploadProductImage(productData.imageFile)
 
       const product = { ...productData, image: imageResponse.data.image }
+      
       const addedProduct = await addProduct(product);
 
       if (addedProduct) {

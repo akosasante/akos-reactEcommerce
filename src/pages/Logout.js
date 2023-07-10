@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import styled from 'styled-components';
 import './styles.css';
 import UpdatePassword from './UpdatePassword.js';
 import { useUserContext } from "../context/user_context";
 import { ReactComponent as ArrowIcon } from '../assets/icons/arrow-with-circle.svg'
+import { authApi, userApi } from '../api';
 
-const rootUrl = 'https://ecommerce-6kwa.onrender.com';
 
 //LOGOUT
 const Logout = () => {
@@ -24,10 +24,8 @@ const Logout = () => {
   const handleUpdate = async () => {
     setUpdateLoading(true);
     try {
-      const url = `${rootUrl}/api/v1/users/updateUser`;
-      const user = currentUser;
+      const user = {...currentUser};
       
-
       if (name) {
         user.name = name;
       }
@@ -36,12 +34,12 @@ const Logout = () => {
         user.email = email;
       }
 
-      const response = await axios.patch(url, user, { withCredentials: true });
+      const updatedUser = await userApi.updateUser(user)
 
-      console.log(response);
+      console.log(updatedUser);
       setUpdateLoading(false);
       setMessage('Update successful');
-      setCurrentUser(response?.data?.user)
+      setCurrentUser(updatedUser)
     } catch (error) {
       console.error(error);
       setUpdateLoading(false);
@@ -61,10 +59,7 @@ const Logout = () => {
   const handleLogout = async () => {
     setLogoutLoading(true);
     try {
-      const url = `${rootUrl}/api/v1/auth/logout`;
-      const response = await axios.get(url, {
-        withCredentials: true,
-      });
+      const response = await authApi.logout();
       console.log(response);
       setLogoutLoading(false);
       setCurrentUser(null);

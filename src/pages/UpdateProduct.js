@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import './styles.css';
 import { ReactComponent as ArrowIcon } from '../assets/icons/arrow-with-circle.svg'
+import { productApi } from '../api';
 
 const UpdateProduct = ({ product, onUpdate }) => {
   const [updatedProductData, setUpdatedProductData] = useState({...product});
@@ -11,14 +11,10 @@ const UpdateProduct = ({ product, onUpdate }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.patch(
-        `https://ecommerce-6kwa.onrender.com/api/v1/products/${productId}`,
-        updatedProductData,
-        { withCredentials: true }
-      );
-      console.log('Product updated successfully:', response.data);
+      const productResponse = await productApi.updateProduct(product.id, updatedProductData);
+      console.log('Product updated successfully:', productResponse);
       setMessage('Product updated successfully');
-      setUpdatedProductData(response?.data?.product)
+      setUpdatedProductData(productResponse)
       onUpdate()
     } catch (error) {
       console.log('Error updating product:', error);

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import './styles.css';
 import { ReactComponent as ArrowIcon } from '../assets/icons/arrow-with-circle.svg'
+import { productApi } from '../api';
 
 // should use the onDelete to do something on `SingleProductPage` when the delete is successful
 // eg: redirect back to product list page, and maybe refetch the products so we no longer see the deleted product.
@@ -11,11 +11,8 @@ const DeleteProduct = ({ productId, onDelete }) => {
 
   const handleDelete = async () => {
     try {
-      const response = await axios.delete(
-        `https://ecommerce-6kwa.onrender.com/api/v1/products/${productId}`,
-        { withCredentials: true }
-      );
-      console.log('Product deleted successfully:', response.data);
+      const response = await productApi.deleteProduct(productId);
+      console.log('Product deleted successfully:', response);
       setMessage('Product deleted successfully');
       onDelete(); // Callback to notify the parent component about the deletion
     } catch (error) {

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useProductsContext } from '../context/products_context';
-import { single_product_url as url } from '../utils/constants';
 import { formatPrice } from '../utils/helpers';
 import {
   Loading,
@@ -34,7 +33,7 @@ const SingleProductPage = () => {
   } = useProductsContext();
   //but i still cant fetch single product
   useEffect(() => {
-    fetchSingleProduct(url, id);
+    fetchSingleProduct(id);
     // eslint-disable-next-line
   }, [id]);
 
@@ -91,7 +90,7 @@ const SingleProductPage = () => {
               <span>Brand :</span>
               {company}
             </p>
-            
+
             <hr />
             {inventory > 0 && <AddToCart product={product} />}
             
@@ -100,7 +99,7 @@ const SingleProductPage = () => {
             {isAdminLoggedIn && (
               <UpdateProduct
                 product={product}
-                onUpdate={() => fetchSingleProduct(url, id)}
+                onUpdate={() => fetchSingleProduct(id)}
               />
             )}
 
@@ -109,7 +108,7 @@ const SingleProductPage = () => {
           <Reviews
             productId={id}
             reviews={product.reviews || []}
-            onReviewChange={() => fetchSingleProduct(url, id)}
+            onReviewChange={() => fetchSingleProduct(id)}
           />
         </div>
       </div>

@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
-import axios  from 'axios';
 import './styles.css';
 import { useUserContext } from "../context/user_context";
 import { ReactComponent as ArrowIcon } from '../assets/icons/arrow-with-circle.svg'
+import { userApi } from '../api';
 
-const rootUrl = 'https://ecommerce-6kwa.onrender.com';
 
 const UpdatePassword = () => {
   const { currentUser } = useUserContext();
-  const [redirectToHome, setRedirectToHome] = useState(false);
-  const [logoutLoading, setLogoutLoading] = useState(false);
-
-  const url = `${rootUrl}/api/v1/users/updateUserPassword`;
 
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -32,16 +27,7 @@ const UpdatePassword = () => {
     setUpdateLoading(true);
 
     try {
-      const response = await axios.patch(
-        url,
-        {
-          oldPassword,
-          newPassword,
-        },
-        {
-          withCredentials: true,
-        }
-      );
+      await userApi.updatePassword(oldPassword, newPassword);
 
       setUpdateLoading(false);
       setMessage('Success! Password updated!');

@@ -1,30 +1,26 @@
 import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { useUserContext } from "../context/user_context";
 import { ReactComponent as ArrowIcon } from '../assets/icons/arrow-with-circle.svg'
 import './styles.css';
-
+import { authApi } from '../api';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [redirectToHome, setRedirectToHome] = useState(false);
-  const [userName, setUserName] = useState('');
   const [loginLoading, setLoginLoading] = useState(false);
   const { setCurrentUser } = useUserContext();
 
   const handleLogin = async (userCredentials) => {
     setLoginLoading(true);
     try {
-      const url = `${rootUrl}/api/v1/auth/login`;
-      const response = await axios.post(url, userCredentials, {
-        withCredentials: true,
-      });
+      const loggedInUser = await authApi.login(userCredentials);
 
-      console.log(response);
+      console.log(loggedInUser);
       setLoginLoading(false);
-      return response?.data?.user;
+      return loggedInUser;
     } catch (error) {
       const errorPayload =
         error instanceof AxiosError ? error?.response?.data : error;
@@ -57,7 +53,6 @@ const Login = () => {
   return (
     <div className='center'>
     <div>
-      {userName && <p>Welcome {userName}!</p>}
       <h2>Login Form</h2>
       <form onSubmit={handleSubmit}>
         <div>

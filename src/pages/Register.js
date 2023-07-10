@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import './styles.css';
 import { useUserContext } from "../context/user_context";
 import { ReactComponent as ArrowIcon } from '../assets/icons/arrow-with-circle.svg'
+import { authApi } from '../api';
 
-const rootUrl = 'https://ecommerce-6kwa.onrender.com';
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -18,13 +18,10 @@ const Register = () => {
   const handleRegister = async (userCredentials) => {
     setRegisterLoading(true);
     try {
-      const url = `${rootUrl}/api/v1/auth/register`;
-      const response = await axios.post(url, userCredentials, {
-        withCredentials: true,
-      });
+      const registeredUser = await authApi.register(userCredentials);
 
-      console.log(response);
-      setCurrentUser(response?.data?.user);
+      console.log(registeredUser);
+      setCurrentUser(registeredUser);
       setRegisterLoading(false);
       return true;
     } catch (error) {

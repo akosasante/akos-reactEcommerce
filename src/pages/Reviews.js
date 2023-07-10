@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useUserContext } from "../context/user_context";
+import { reviewApi } from '../api';
 
 const Reviews = ({ productId, reviews, onReviewChange }) => {
   // Fetch current user from context provider, and store it in the `user` variable
@@ -17,11 +17,7 @@ const Reviews = ({ productId, reviews, onReviewChange }) => {
 
   const createReview = async (productId) => {
     try {
-      await axios.post(
-        'https://ecommerce-6kwa.onrender.com/api/v1/reviews',
-        formData,
-        { withCredentials: true }
-      );
+      await reviewApi.createReview(formData);
       setFormData({
         rating: '',
         title: '',
@@ -43,11 +39,7 @@ const Reviews = ({ productId, reviews, onReviewChange }) => {
 
   const updateReview = async (reviewId, productId) => {
     try {
-      await axios.patch(
-        `https://ecommerce-6kwa.onrender.com/api/v1/reviews/${reviewId}`,
-        formData,
-        { withCredentials: true }
-      );
+      await reviewApi.updateReview(reviewId, formData)
       setFormData({
         rating: Number,
         title: '',
@@ -68,10 +60,7 @@ const Reviews = ({ productId, reviews, onReviewChange }) => {
 
   const deleteReview = async (reviewId) => {
     try {
-      await axios.delete(
-        `https://ecommerce-6kwa.onrender.com/api/v1/reviews/${reviewId}`,
-        { withCredentials: true }
-      );
+      await reviewApi.deleteReview(reviewId);
       setMessage('Review deleted successfully');
       onReviewChange();
     } catch (error) {

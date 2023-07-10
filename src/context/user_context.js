@@ -1,20 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
-import axios, { AxiosError } from "axios";
-import { user_url } from '../utils/constants'
+import { AxiosError } from "axios";
+import { userApi } from '../api';
 
 async function fetchCurrentUser() {
-  const url = `${user_url}/showMe`;
-  return axios
-    .get(url, { withCredentials: true })
-    .then((response) => {
-      console.log("fetchCurrentUser response: ", response);
-      return response?.data?.user;
-    })
-    .catch((error) => {
-      const errorPayload =
+  try {
+    const currentUser = await userApi.getCurrentUser();
+    return currentUser;
+  } catch (error) {
+    const errorPayload =
         error instanceof AxiosError ? error?.response?.data : error;
       console.error(errorPayload);
-    });
+  }
 }
 
 // Create the context object, and pass the initial/default value.
@@ -24,7 +20,7 @@ const UserContext = React.createContext({ currentUser: null });
 // Define the context "provider" (ie: the component <UserProvider>)
 // The only prop we care about in this case is the React nested children (so that we can ensure that they are rendered by this component)
 export const UserProvider = ({ children }) => {
-  // lines 31-40: Using useEffect to request the current user from the backend when the context is first loaded/rendered
+  // lines 28-36: Using useEffect to request the current user from the backend when the context is first loaded/rendered
   // If a user is returned, then update the context state using `setCurrentState`
   // This value will now be available with `useUserContext` to any components nested within this `<UserProvider>` component
   // That means other components don't need to make extra requests to the `/showMe` endpoint since this context has already handled it
