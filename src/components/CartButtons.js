@@ -17,7 +17,7 @@ const CartButtons = () => {
   return (
     <Wrapper className="cart-btn-wrapper">
       {!currentUser && (
-        <Link to='/login' className='cart-btn'>
+        <Link to='/login' className='cart-btn' onClick={closeSidebar}>
           <span>
             <FaUserPlus />
           </span>
@@ -25,7 +25,7 @@ const CartButtons = () => {
       )}
 
       {currentUser && (
-        <Link to='/logout' className='cart-btn'>
+        <Link to='/logout' className='cart-btn' onClick={closeSidebar}>
           <span className='welcome'> Welcome {currentUser?.name} </span>
           <span className='icon'>
       <FaUserMinus />
