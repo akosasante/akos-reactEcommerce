@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useProductsContext } from '../context/products_context';
 import { single_product_url as url } from '../utils/constants';
@@ -97,13 +97,21 @@ const SingleProductPage = () => {
             
           </section>
           <div>
-            {isAdminLoggedIn && <UpdateProduct product={product} onUpdate={() => fetchSingleProduct(url, id)}/>}
-         
-            {isAdminLoggedIn && <DeleteProduct productId={id}/>}
-            </div>
-<Reviews productId ={id}/>
-        </div>
+            {isAdminLoggedIn && (
+              <UpdateProduct
+                product={product}
+                onUpdate={() => fetchSingleProduct(url, id)}
+              />
+            )}
 
+            {isAdminLoggedIn && <DeleteProduct productId={id} />}
+          </div>
+          <Reviews
+            productId={id}
+            reviews={product.reviews || []}
+            onReviewChange={() => fetchSingleProduct(url, id)}
+          />
+        </div>
       </div>
     </Wrapper>
   );
