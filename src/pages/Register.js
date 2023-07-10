@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import axios, { AxiosError } from 'axios';
 import './styles.css';
+import { useUserContext } from "../context/user_context";
+
 const rootUrl = 'https://ecommerce-6kwa.onrender.com';
 
 const Register = () => {
@@ -10,6 +12,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [redirectToHome, setRedirectToHome] = useState(false);
   const [registerLoading, setRegisterLoading] = useState(false);
+  const { setCurrentUser } = useUserContext();
 
   const handleRegister = async (userCredentials) => {
     setRegisterLoading(true);
@@ -20,6 +23,7 @@ const Register = () => {
       });
 
       console.log(response);
+      setCurrentUser(response?.data?.user);
       setRegisterLoading(false);
       return true;
     } catch (error) {

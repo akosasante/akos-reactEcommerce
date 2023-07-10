@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import axios, { AxiosError } from 'axios';
+import { useUserContext } from "../context/user_context";
 import './styles.css';
 const rootUrl = 'https://ecommerce-6kwa.onrender.com';
 
@@ -10,6 +11,7 @@ const Login = () => {
   const [redirectToHome, setRedirectToHome] = useState(false);
   const [userName, setUserName] = useState('');
   const [loginLoading, setLoginLoading] = useState(false);
+  const { setCurrentUser } = useUserContext();
 
   const handleLogin = async (userCredentials) => {
     setLoginLoading(true);
@@ -25,7 +27,7 @@ const Login = () => {
 
       console.log(response);
       setLoginLoading(false);
-      return true;
+      return response?.data?.user;
     } catch (error) {
       const errorPayload =
         error instanceof AxiosError ? error?.response?.data : error;
@@ -39,10 +41,11 @@ const Login = () => {
     e.preventDefault();
     if (!email || !password) return;
     const user = { email, password };
-    const success = await handleLogin(user);
-    if (success) {
+    const loggedInUser = await handleLogin(user);
+    if (loggedInUser) {
       setEmail('');
       setPassword('');
+      setCurrentUser(loggedInUser);
       setRedirectToHome(true);
     }
   };

@@ -1,36 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios, { AxiosError } from 'axios';
 import styled from 'styled-components';
 import './styles.css';
 import UpdatePassword from './UpdatePassword.js';
+import { useUserContext } from "../context/user_context";
+
 const rootUrl = 'https://ecommerce-6kwa.onrender.com';
 
 //LOGOUT
 const Logout = () => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const { currentUser, setCurrentUser } = useUserContext();
   const [redirectToHome, setRedirectToHome] = useState(false);
   const [logoutLoading, setLogoutLoading] = useState(false);
-
-  useEffect(() => {
-    async function fetchData() {
-      const url = `${rootUrl}/api/v1/users/showMe`;
-      axios
-        .get(url, { withCredentials: true })
-        .then((response) => {
-          console.log(response);
-          setCurrentUser(response?.data?.user);
-        })
-        .catch((error) => {
-          const errorPayload =
-            error instanceof AxiosError ? error?.response?.data : error;
-          console.error(errorPayload);
-        });
-    }
-    fetchData();
-  }, []);
-
-  const personLoggedIn = currentUser?.role === 'admin' || 'user';
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -58,6 +40,7 @@ const Logout = () => {
       console.log(response);
       setUpdateLoading(false);
       setMessage('Update successful');
+      setCurrentUser(response?.data?.user)
     } catch (error) {
       console.error(error);
       setUpdateLoading(false);
@@ -83,6 +66,7 @@ const Logout = () => {
       });
       console.log(response);
       setLogoutLoading(false);
+      setCurrentUser(null);
       setRedirectToHome(true); //added
       return true;
     } catch (error) {
@@ -107,7 +91,7 @@ const Logout = () => {
   return (
     <Wrapper>
       <div className="left underline ">
-        {personLoggedIn && (
+        {currentUser && (
           <div >
             <h3>Update User</h3>
             <form onSubmit={handleSubmit}>

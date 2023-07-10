@@ -42,7 +42,7 @@ export const services = [
   },
 ]
 
-
+export const user_url = 'https://ecommerce-6kwa.onrender.com/api/v1/users'
 export const products_url = 'https://ecommerce-6kwa.onrender.com/api/v1/products'
 export const single_product_url = `https://ecommerce-6kwa.onrender.com/api/v1/products`
 //point of access to my api 

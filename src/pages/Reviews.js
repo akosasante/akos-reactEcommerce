@@ -1,25 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useUserContext } from "../context/user_context";
 
 const Reviews = ({ productId }) => {
-  // Fetch current user
-  const [currentUser, setCurrentUser] = useState(null);
-  useEffect(() => {
-    const fetchCurrentUser = async () => {
-      try {
-        const response = await axios.get(
-          'https://ecommerce-6kwa.onrender.com/api/v1/users/showMe',
-          { withCredentials: true }
-        );
-        setCurrentUser(response?.data?.user);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchCurrentUser();
-  }, []);
-
-  const user = currentUser;
+  // Fetch current user from context provider, and store it in the `user` variable
+  const { currentUser: user } = useUserContext();
   //console.log(user.userId); //user id
 
   const [message, setMessage] = useState('');

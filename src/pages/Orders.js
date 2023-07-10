@@ -1,29 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useCartContext } from '../context/cart_context';
 import './styles.css';
-import axios, { AxiosError } from 'axios';
-const rootUrl = 'https://ecommerce-6kwa.onrender.com';
+import axios  from 'axios';
+import { useUserContext } from "../context/user_context";
 
 const Orders = () => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const { currentUser } = useUserContext();
   const [message, setMessage] = useState('');
   const [hasOrdered, setHasOrdered] = useState(false);
-
-  useEffect(() => {
-    async function fetchData() {
-      const url = `${rootUrl}/api/v1/users/showMe`;
-
-      try {
-        const response = await axios.get(url, { withCredentials: true });
-        setCurrentUser(response?.data?.user);
-      } catch (error) {
-        const errorPayload =
-          error instanceof AxiosError ? error?.response?.data : error;
-        console.error(errorPayload);
-      }
-    }
-    fetchData();
-  }, []);
 
   const user = currentUser;
 

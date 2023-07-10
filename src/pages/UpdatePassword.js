@@ -1,34 +1,14 @@
-import React, { useState , useEffect } from 'react';
-import axios , { AxiosError } from 'axios';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import axios  from 'axios';
 import './styles.css';
+import { useUserContext } from "../context/user_context";
 
 const rootUrl = 'https://ecommerce-6kwa.onrender.com';
 
 const UpdatePassword = () => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const { currentUser } = useUserContext();
   const [redirectToHome, setRedirectToHome] = useState(false);
   const [logoutLoading, setLogoutLoading] = useState(false);
-  //fetch user id
-  useEffect(() => {
-    async function fetchData() {
-      const url = `${rootUrl}/api/v1/users/showMe`;
-      axios
-        .get(url, { withCredentials: true })
-        .then((response) => {
-          console.log(response);
-          setCurrentUser(response?.data?.user);
-        })
-        .catch((error) => {
-          const errorPayload =
-            error instanceof AxiosError ? error?.response?.data : error;
-          console.error(errorPayload);
-        });
-    }
-    fetchData();
-  }, []);
-
-  const user = currentUser;
 
   const url = `${rootUrl}/api/v1/users/updateUserPassword`;
 
