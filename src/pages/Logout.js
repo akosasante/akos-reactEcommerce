@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { AxiosError } from 'axios';
 import styled from 'styled-components';
 import './styles.css';
 import UpdatePassword from './UpdatePassword.js';
@@ -65,11 +64,7 @@ const Logout = () => {
       setCurrentUser(null);
       setRedirectToHome(true); //added
       return true;
-    } catch (error) {
-      console.log(error);
-      const errorPayload =
-        error instanceof AxiosError ? error?.response?.data : error;
-      console.error(errorPayload);
+    } catch (_error) {
       setLogoutLoading(false);
       return false;
     }

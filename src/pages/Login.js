@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { AxiosError } from 'axios';
 import { useUserContext } from "../context/user_context";
 import { ReactComponent as ArrowIcon } from '../assets/icons/arrow-with-circle.svg'
 import './styles.css';
@@ -21,10 +20,7 @@ const Login = () => {
       console.log(loggedInUser);
       setLoginLoading(false);
       return loggedInUser;
-    } catch (error) {
-      const errorPayload =
-        error instanceof AxiosError ? error?.response?.data : error;
-      console.error(errorPayload);
+    } catch (_error) {
       setLoginLoading(false);
       return false;
     }

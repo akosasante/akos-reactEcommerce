@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { AxiosError } from "axios";
 import { userApi } from '../api';
 
 async function fetchCurrentUser() {
@@ -7,9 +6,7 @@ async function fetchCurrentUser() {
     const currentUser = await userApi.getCurrentUser();
     return currentUser;
   } catch (error) {
-    const errorPayload =
-        error instanceof AxiosError ? error?.response?.data : error;
-      console.error(errorPayload);
+    console.error('getCurrentUser failed')
   }
 }
 
